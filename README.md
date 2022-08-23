@@ -1,2 +1,2 @@
-# weather-app
-Build a weather based app in partial completion of The Odin Project curriculum
+# Weather App
+Build a web baesd weather app in partial completion of The Odin Project curriculum.
