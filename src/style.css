@@ -3,6 +3,11 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
 /* Header styling */
 header {
@@ -42,4 +47,10 @@ h1 {
 }
 .title-div {
 	flex: 1;
+}
+
+/* Footer Styling */
+footer {
+  text-align: center;
+  margin-top: auto;
 }
