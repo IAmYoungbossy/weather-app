@@ -1,7 +1,6 @@
-/* eslint-disable no-use-before-define */
-import { createHeader } from "./header";
-import { getWeatherData } from "./fetch-data";
 import "./style.css";
+import { createHeader } from "./page-header";
+import { getWeatherData } from "./fetch-data";
 import { createfooter } from "./page-footer";
 
 getWeatherData();
