@@ -1,5 +1,8 @@
 import { createDomElement } from "./create-dom-element";
 
+/**
+ * Function for creating footer
+ */
 function createfooter() {
 	const footer = createDomElement("footer");
 	const anchorLink = createDomElement("a", {
@@ -20,7 +23,6 @@ function createfooter() {
 	icons8Anchor.textContent = " Icons8 ";
 	iconsCredit.append("Icons by", flatIconAnchor, " & ", icons8Anchor);
 	anchorLink.appendChild(gitHubIcon);
-
 	footer.append(
 		"Copyright \u00A9 2022 IAmYoungbossy",
 		"  ",

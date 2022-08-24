@@ -19,7 +19,6 @@ header {
   min-width: min-content;
   border: 1px solid black;
 }
-
 input {
 	flex: 1;
 	padding: 5px;
@@ -39,7 +38,6 @@ button {
 h1 {
 	font-size: 2rem;
 }
-
 .search-div {
   flex: 2;
   display: flex;
@@ -47,6 +45,29 @@ h1 {
 }
 .title-div {
 	flex: 1;
+}
+
+/* Main Styling */
+main {
+  flex: 1;
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  grid-template-columns: 3fr 1fr;
+  border: 1px solid black;
+}
+.today-data-div {
+  flex: 1.2;
+  border: 1px solid black;
+}
+.next-7days-div {
+  flex: 2;
+  grid-area: 2/1/3/2;
+  border: 1px solid black;
+}
+.watchlist-div {
+  flex: 1;
+  grid-area: 1/2/3/3;
+  border: 1px solid black;
 }
 
 /* Footer Styling */
