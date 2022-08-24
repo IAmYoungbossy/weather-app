@@ -1,6 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-/* eslint-disable no-use-before-define */
-
 function createDomElement(type, attributes) {
   const newElement = document.createElement(`${type}`);
   if (attributes == null) return newElement;
