@@ -12,43 +12,7 @@ function getWeatherData() {
 		.then((response) => response.json())
 		.then((response) => {
 			console.log(response);
-
-			const [
-				weatherDesc,
-				descIcon,
-				nameOfCity,
-				temperature,
-				lowTemp,
-				highTemp,
-				feelsLikeTemp,
-			] = dataDisplay();
-
-			const [regionName] = getCountryName(response);
-			weatherDesc.textContent = `${response.weather[0].description}`;
-			nameOfCity.textContent = `${regionName}`;
-
-			lowTemp.append(
-				"Low: ",
-				convertKelvinToCelsius(response.main.temp_min),
-				superScript()
-			);
-			highTemp.append(
-				"High: ",
-				convertKelvinToCelsius(response.main.temp_max),
-				superScript()
-			);
-			temperature.append(
-				`${convertKelvinToCelsius(response.main.temp)}`,
-				superScript(),
-				descIcon
-			);
-			feelsLikeTemp.append(
-				"Feels Like ",
-				convertKelvinToCelsius(response.main.feels_like),
-				superScript()
-			);
-
-			descIcon.src = `https://openweathermap.org/img/w/${response.weather[0].icon}.png`;
+			displayWeatherReport(response);
 
 			const { lat } = response.coord;
 			const { lon } = response.coord;
@@ -63,6 +27,44 @@ function next7DaysForecast(lat, lon) {
 	)
 		.then((response) => response.json())
 		.then((response) => console.log(response));
+}
+
+function displayWeatherReport(response) {
+	const [
+		weatherDesc,
+		descIcon,
+		nameOfCity,
+		temperature,
+		lowTemp,
+		highTemp,
+		feelsLikeTemp,
+	] = dataDisplay();
+
+	const [regionName] = getCountryName(response);
+	weatherDesc.textContent = `${response.weather[0].description}`;
+	nameOfCity.textContent = `${regionName}`;
+
+	lowTemp.append(
+		"Low: ",
+		convertKelvinToCelsius(response.main.temp_min),
+		superScript()
+	);
+	highTemp.append(
+		"High: ",
+		convertKelvinToCelsius(response.main.temp_max),
+		superScript()
+	);
+	temperature.append(
+		`${convertKelvinToCelsius(response.main.temp)}`,
+		superScript()
+	);
+	feelsLikeTemp.append(
+		"Feels Like ",
+		convertKelvinToCelsius(response.main.feels_like),
+		superScript()
+	);
+
+	descIcon.src = `https://openweathermap.org/img/w/${response.weather[0].icon}.png`;
 }
 
 function getCountryName(response) {
@@ -94,10 +96,12 @@ function dataDisplay() {
 	const highTemp = createDomElement("p", { class: "high-temp" });
 	const lowTemp = createDomElement("p", { class: "low-temp" });
 	const feelsLikeTemp = createDomElement("p", { class: "feels-like-temp" });
+	const temperatureDiv = createDomElement("div", { class: "temperature-div" });
 	const temperature = createDomElement("p", { class: "temperature" });
 
 	tempRange.append(lowTemp, highTemp);
-	tempDiv.append(tempRange, temperature, feelsLikeTemp);
+	temperatureDiv.append(temperature, descIcon);
+	tempDiv.append(tempRange, temperatureDiv, feelsLikeTemp);
 	todayDataDiv.append(weatherDesc, nameOfCity, tempDiv);
 
 	return [

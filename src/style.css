@@ -56,6 +56,7 @@ main {
 	border: 1px solid black;
 }
 .today-data-div {
+	padding: 10px 20px;
 	flex: 1.2;
 	border: 1px solid black;
 }
@@ -69,19 +70,21 @@ main {
 	grid-area: 1/2/3/3;
 	border: 1px solid black;
 }
-.name-of-city,
-.feels-like-temp,
-.weather-desc {
-	text-align: center;
-}
 .temp-range {
 	display: flex;
-	justify-content: space-evenly;
+	gap: 10px;
+}
+.temperature-div {
+	display: flex;
 }
 .temperature {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	font-size: 4rem;
+}
+.temperature > .super-script {
+	font-size: 2rem;
+}
+.disc-icon {
+  width: 75px;
 }
 
 /* Footer Styling */
