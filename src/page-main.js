@@ -1,4 +1,10 @@
 import { createDomElement } from "./create-dom-element";
+import Date from "./icons/date.png";
+import Humidity from "./icons/humidity.png";
+import Pressure from "./icons/pressure.png";
+import Timezone from "./icons/timezone.png";
+import Wind from "./icons/wind.png";
+import SeaLevel from "./icons/sealevel.png";
 
 function createMainContents() {
 	const mainDiv = createDomElement("main", { class: "main" });
@@ -46,13 +52,26 @@ function minorDataReport() {
 	const pressure = createDomElement("p", { class: "pressure" });
 	const humidityDiv = createDomElement("div", { class: "humidity-div" });
 	const humidity = createDomElement("p", { class: "humidity" });
+	const MyDate = new Image();
+	const MyHumidity = new Image();
+	const MyPressure = new Image();
+	const MyTimezone = new Image();
+	const MySeaLevel = new Image();
+	const MyWind = new Image();
 
-	windDiv.append(wind);
-	seaLevelDiv.append(seaLevel);
-	timeZoneDiv.append(timeZone);
-	dateDiv.append(date);
-	pressureDiv.append(pressure);
-	humidityDiv.append(humidity);
+	MyDate.src = Date;
+	MyHumidity.src = Humidity;
+	MyPressure.src = Pressure;
+	MyTimezone.src = Timezone;
+	MySeaLevel.src = SeaLevel;
+	MyWind.src = Wind;
+
+	windDiv.append(MyWind, wind);
+	seaLevelDiv.append(MySeaLevel, seaLevel);
+	timeZoneDiv.append(MyTimezone, timeZone);
+	dateDiv.append(MyDate, date);
+	pressureDiv.append(MyPressure, pressure);
+	humidityDiv.append(MyHumidity, humidity);
 	minorDataDiv.append(
 		windDiv,
 		seaLevelDiv,
