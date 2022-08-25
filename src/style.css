@@ -56,9 +56,11 @@ main {
 	border: 1px solid black;
 }
 .today-data-div {
-	padding: 10px 20px;
-	flex: 1.2;
-	border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  flex: 1.2;
+  border: 1px solid black;
 }
 .next-7days-div {
 	flex: 2;
@@ -84,7 +86,14 @@ main {
 	font-size: 2rem;
 }
 .disc-icon {
-  width: 75px;
+	width: 75px;
+}
+.minor-data-div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(20vw, 100px), 1fr));
+  gap: 45px;
+  margin-top: auto;
+  align-items: center;
 }
 
 /* Footer Styling */

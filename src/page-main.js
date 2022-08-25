@@ -23,4 +23,88 @@ function getWatchlist(mainDiv) {
 	mainDiv.append(watchlistDiv);
 }
 
-export { createMainContents };
+function getCountryName(response) {
+	const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+	const countryName = regionNames.of(response.sys.country);
+	if (countryName == response.name) return [countryName];
+	else return [`${response.name}, ${countryName}.`];
+}
+
+function minorDataReport() {
+	const minorDataDiv = document.body.childNodes[2].childNodes[0].childNodes[3];
+	const windDiv = createDomElement("div", { class: "wind-div" });
+	const wind = createDomElement("p", { class: "wind" });
+	const seaLevelDiv = createDomElement("div", { class: "sea-level-div" });
+	const seaLevel = createDomElement("p", { class: "sea-level" });
+	const timeZoneDiv = createDomElement("div", { class: "time-zone-div" });
+	const timeZone = createDomElement("p", { class: "time-zone" });
+	const dateDiv = createDomElement("div", {
+		class: "date-div",
+	});
+	const date = createDomElement("p", { class: "date" });
+	const pressureDiv = createDomElement("div", { class: "pressure-div" });
+	const pressure = createDomElement("p", { class: "pressure" });
+	const humidityDiv = createDomElement("div", { class: "humidity-div" });
+	const humidity = createDomElement("p", { class: "humidity" });
+
+	windDiv.append(wind);
+	seaLevelDiv.append(seaLevel);
+	timeZoneDiv.append(timeZone);
+	dateDiv.append(date);
+	pressureDiv.append(pressure);
+	humidityDiv.append(humidity);
+	minorDataDiv.append(
+		windDiv,
+		seaLevelDiv,
+		timeZoneDiv,
+		dateDiv,
+		pressureDiv,
+		humidityDiv
+	);
+	return [wind, seaLevel, timeZone, date, pressure, humidity];
+}
+
+function superScript() {
+	const supScript = createDomElement("sup", { class: "super-script" });
+	const supScript2 = createDomElement("sup", { class: "super-script" });
+	supScript.textContent = "o";
+	supScript2.append(supScript, "C");
+	return supScript2;
+}
+
+function dataDisplay() {
+	const todayDataDiv = document.body.childNodes[2].childNodes[0];
+	const weatherDesc = createDomElement("p", { class: "weather-desc" });
+	const nameOfCity = createDomElement("h2", { class: "name-of-city" });
+	const descIcon = createDomElement("img", { class: "desc-icon" });
+	const tempDiv = createDomElement("div", { class: "temp-div" });
+	const tempRange = createDomElement("div", { class: "temp-range" });
+	const highTemp = createDomElement("p", { class: "high-temp" });
+	const lowTemp = createDomElement("p", { class: "low-temp" });
+	const feelsLikeTemp = createDomElement("p", { class: "feels-like-temp" });
+	const temperatureDiv = createDomElement("div", { class: "temperature-div" });
+	const temperature = createDomElement("p", { class: "temperature" });
+	const minorDataDiv = createDomElement("div", { class: "minor-data-div" });
+
+	tempRange.append(lowTemp, highTemp);
+	temperatureDiv.append(temperature, descIcon);
+	tempDiv.append(tempRange, temperatureDiv, feelsLikeTemp);
+	todayDataDiv.append(weatherDesc, nameOfCity, tempDiv, minorDataDiv);
+	return [
+		weatherDesc,
+		descIcon,
+		nameOfCity,
+		temperature,
+		lowTemp,
+		highTemp,
+		feelsLikeTemp,
+	];
+}
+
+export {
+	createMainContents,
+	getCountryName,
+	minorDataReport,
+	superScript,
+	dataDisplay,
+};
