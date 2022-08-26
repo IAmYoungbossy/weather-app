@@ -1,21 +1,22 @@
 import { dataDisplay, minorDataReport, superScript } from "./page-main";
 
-const cityName = "Port Harcourt";
+let countryAndCityName;
+const cityName = "London";
+const API = "20f7632ffc2c022654e4093c6947b4f4";
 
 function getWeatherData() {
 	fetch(
-		`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=1d849694bc0f4283fc1f008f1259542e`,
+		`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&APPID=${API}`,
 		{
 			mode: "cors",
 		}
 	)
 		.then((response) => response.json())
 		.then((response) => {
-			console.log(response);
-			displayWeatherReport(response);
 
 			const { lat } = response.coord;
 			const { lon } = response.coord;
+			getCountryName(response);
 			next7DaysForecast(lat, lon);
 		})
 		.catch((error) => console.log(error));
@@ -23,10 +24,13 @@ function getWeatherData() {
 
 function next7DaysForecast(lat, lon) {
 	fetch(
-		`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&cnt=7&appid=1d849694bc0f4283fc1f008f1259542e`
+		`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${API}`
 	)
 		.then((response) => response.json())
-		.then((response) => console.log(response));
+		.then((response) => {
+			displayWeatherReport(response);
+			console.log(response.daily);
+		});
 }
 
 function displayWeatherReport(response) {
@@ -40,51 +44,37 @@ function displayWeatherReport(response) {
 		feelsLikeTemp,
 	] = dataDisplay();
 
-	const [wind, seaLevel, timeZone, date, pressure, humidity] =
+	const [wind, dewPoint, timeZone, uvIndex, pressure, humidity] =
 		minorDataReport();
 
-	const [regionName] = getCountryName(response);
-	weatherDesc.textContent = `${response.weather[0].description}`;
-	nameOfCity.textContent = `${regionName}`;
-
-	lowTemp.append(
-		"Low: ",
-		convertKelvinToCelsius(response.main.temp_min),
-		superScript()
-	);
+	nameOfCity.textContent = countryAndCityName;
+	weatherDesc.textContent = `${response.current.weather[0].description}`;
+	lowTemp.append("Low: ", parseInt(response.daily[0].temp.min), superScript());
 	highTemp.append(
 		"High: ",
-		convertKelvinToCelsius(response.main.temp_max),
+		parseInt(response.daily[0].temp.max),
 		superScript()
 	);
-	temperature.append(
-		`${convertKelvinToCelsius(response.main.temp)}`,
-		superScript()
-	);
+	temperature.append(parseInt(response.current.temp), superScript());
 	feelsLikeTemp.append(
 		"Feels Like ",
-		convertKelvinToCelsius(response.main.feels_like),
+		parseInt(response.current.feels_like),
 		superScript()
 	);
-	wind.append(`Wind Speed: ${response.wind.speed}`);
-	seaLevel.append(`Sea Level: ${response.main.sea_level}`);
+	wind.append(`Wind Speed: ${response.current.wind_speed}`);
+	dewPoint.append(`Dew Point: ${response.current.dew_point}`);
 	timeZone.append(`time Zone: ${response.timezone}`);
-	date.append(`Current Date: ${response.dt}`);
-	pressure.append(`Pressure: ${response.main.pressure}`);
-	humidity.append(`Humidity: ${response.main.humidity}`);
-
-	descIcon.src = `https://openweathermap.org/img/w/${response.weather[0].icon}.png`;
+	uvIndex.append(`UV Index: ${response.current.uvi}`);
+	pressure.append(`Pressure: ${response.current.pressure}`);
+	humidity.append(`Humidity: ${response.current.humidity}`);
+	descIcon.src = `https://openweathermap.org/img/w/${response.current.weather[0].icon}.png`;
 }
 
 function getCountryName(response) {
 	const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 	const countryName = regionNames.of(response.sys.country);
-	if (countryName == response.name) return [countryName];
-	else return [`${response.name}, ${countryName}.`];
-}
-
-function convertKelvinToCelsius(response) {
-	return parseInt(response) - 273;
+	if (countryName == response.name) countryAndCityName = countryName;
+	else countryAndCityName = `${response.name}, ${countryName}.`;
 }
 
 export { getWeatherData };

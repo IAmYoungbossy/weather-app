@@ -7,6 +7,7 @@ body {
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
+  background-color: lightslategrey;
 }
 
 /* Header styling */
@@ -85,7 +86,7 @@ main {
 .temperature > .super-script {
 	font-size: 2rem;
 }
-.disc-icon {
+.desc-icon {
 	width: 75px;
 }
 .minor-data-div {
