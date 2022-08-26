@@ -1,7 +1,8 @@
 import { dataDisplay, minorDataReport, superScript } from "./page-main";
+import { createForecastCard } from "./seven-days-forecast";
 
 let countryAndCityName;
-const cityName = "London";
+const cityName = "Port Harcourt";
 const API = "20f7632ffc2c022654e4093c6947b4f4";
 
 function getWeatherData() {
@@ -13,7 +14,6 @@ function getWeatherData() {
 	)
 		.then((response) => response.json())
 		.then((response) => {
-
 			const { lat } = response.coord;
 			const { lon } = response.coord;
 			getCountryName(response);
@@ -28,9 +28,15 @@ function next7DaysForecast(lat, lon) {
 	)
 		.then((response) => response.json())
 		.then((response) => {
-			displayWeatherReport(response);
 			console.log(response.daily);
+			displayWeatherReport(response);
+			display7DaysForecast(response);
 		});
+}
+
+function display7DaysForecast(response) {
+	for (let i = 1; i < response.daily.length; i++)
+		createForecastCard(response.daily[i]);
 }
 
 function displayWeatherReport(response) {

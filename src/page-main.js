@@ -84,17 +84,17 @@ function superScript() {
 
 function dataDisplay() {
 	const todayDataDiv = document.body.childNodes[2].childNodes[0];
-	const weatherDesc = createDomElement("p", { class: "weather-desc" });
-	const nameOfCity = createDomElement("h2", { class: "name-of-city" });
-	const descIcon = createDomElement("img", { class: "desc-icon" });
-	const tempDiv = createDomElement("div", { class: "temp-div" });
-	const tempRange = createDomElement("div", { class: "temp-range" });
-	const highTemp = createDomElement("p", { class: "high-temp" });
-	const lowTemp = createDomElement("p", { class: "low-temp" });
-	const feelsLikeTemp = createDomElement("p", { class: "feels-like-temp" });
-	const temperatureDiv = createDomElement("div", { class: "temperature-div" });
-	const temperature = createDomElement("p", { class: "temperature" });
-	const minorDataDiv = createDomElement("div", { class: "minor-data-div" });
+	const weatherDesc = createDomElement("p", { class: "weather-desc" }),
+		nameOfCity = createDomElement("h2", { class: "name-of-city" }),
+		descIcon = createDomElement("img", { class: "desc-icon" }),
+		tempDiv = createDomElement("div", { class: "temp-div" }),
+		tempRange = createDomElement("div", { class: "temp-range" }),
+		highTemp = createDomElement("p", { class: "high-temp" }),
+		lowTemp = createDomElement("p", { class: "low-temp" }),
+		feelsLikeTemp = createDomElement("p", { class: "feels-like-temp" }),
+		temperatureDiv = createDomElement("div", { class: "temperature-div" }),
+		temperature = createDomElement("p", { class: "temperature" }),
+		minorDataDiv = createDomElement("div", { class: "minor-data-div" });
 
 	tempRange.append(lowTemp, highTemp);
 	temperatureDiv.append(temperature, descIcon);
@@ -112,9 +112,4 @@ function dataDisplay() {
 	];
 }
 
-export {
-	createMainContents,
-	minorDataReport,
-	superScript,
-	dataDisplay,
-};
+export { createMainContents, minorDataReport, superScript, dataDisplay };
