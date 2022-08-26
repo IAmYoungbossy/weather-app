@@ -8,18 +8,18 @@ import SeaLevel from "./icons/sealevel.png";
 
 function createMainContents() {
 	const mainDiv = createDomElement("main", { class: "main" });
-	getTodayForecast(mainDiv);
-	getNext7DaysForecast(mainDiv);
+	createTodayForecastContainer(mainDiv);
+	createNextdaysContainerDiv(mainDiv);
 	getWatchlist(mainDiv);
 	document.body.append(mainDiv);
 }
 
-function getTodayForecast(mainDiv) {
+function createTodayForecastContainer(mainDiv) {
 	const todayDataDiv = createDomElement("div", { class: "today-data-div" });
 	mainDiv.append(todayDataDiv);
 }
 
-function getNext7DaysForecast(mainDiv) {
+function createNextdaysContainerDiv(mainDiv) {
 	const next7DaysDiv = createDomElement("div", { class: "next-7days-div" });
 	mainDiv.append(next7DaysDiv);
 }
