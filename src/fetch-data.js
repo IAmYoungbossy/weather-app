@@ -49,7 +49,6 @@ function displayWeatherReport(response) {
 		highTemp,
 		feelsLikeTemp,
 	] = dataDisplay();
-
 	const [wind, dewPoint, timeZone, uvIndex, pressure, humidity] =
 		minorDataReport();
 
