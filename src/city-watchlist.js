@@ -11,8 +11,7 @@ function watchlist() {
 			type: "search",
 			placeholder: "Add City",
 		}),
-		MyAddIcon = new Image();
-	MyAddIcon.src = AddIcon;
+		MyAddIcon = createDomElement("img", { class: "add-icon", src: AddIcon });
 
 	addCityButton.append(MyAddIcon, watchlistInput);
 	watchlistHeader.textContent = "Watchlist";
@@ -20,4 +19,27 @@ function watchlist() {
 	watchlistDiv.append(watchlistHeader, cityList);
 }
 
-export { watchlist };
+function addCityToWatchlist() {
+	const addCityButton =
+			document.body.childNodes[2].childNodes[2].childNodes[1].lastChild,
+		cityList = document.body.childNodes[2].childNodes[2].childNodes[1],
+		watchlistInput = addCityButton.children[1],
+		city = createDomElement("li", { class: "city" });
+
+	city.textContent = watchlistInput.value;
+	cityList.insertBefore(city, addCityButton);
+}
+
+function addListenerToButton() {
+	document.addEventListener("click", addEventListenerToBtn);
+}
+
+function addEventListenerToBtn(e) {
+	const addCityButton =
+			document.body.childNodes[2].childNodes[2].childNodes[1].lastChild,
+		watchlistInput = addCityButton.children[1];
+	if (e.target.className == "add-icon")
+		watchlistInput.value.trim() === "" ? false : addCityToWatchlist();
+}
+
+export { watchlist, addListenerToButton };
