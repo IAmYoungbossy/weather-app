@@ -20,7 +20,7 @@ header {
 	min-width: min-content;
 	border: 1px solid black;
 }
-input {
+.search-div > input {
 	flex: 1;
 	padding: 5px;
 	border-right: none;
@@ -87,6 +87,21 @@ li {
 	list-style: none;
 	border-radius: 10px;
 	background-color: rgb(0 0 0 / 20%);
+}
+.add-button {
+	display: flex;
+	align-items: center;
+	padding-right: 30px;
+	gap: 5px;
+}
+.add-button > input {
+	flex: 1;
+	border: none;
+	background-color: initial;
+}
+.add-button > input:focus-visible {
+	flex: 1;
+	outline: none;
 }
 .temp-range {
 	display: flex;
