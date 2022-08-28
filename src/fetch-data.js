@@ -7,7 +7,7 @@ const cityName = "Port Harcourt",
 	exclude = `${cityName}&units=metric&APPID=${API}`,
 	exclude2 = `&exclude=minutely,hourly,alerts&units=metric&appid=${API}`;
 
-function getWeatherData(cb) {
+function getWeatherData(func, cb) {
 	fetch(`https://api.openweathermap.org/data/2.5/weather?q=${exclude}`, {
 		mode: "cors",
 	})
@@ -16,7 +16,7 @@ function getWeatherData(cb) {
 			const { lat } = response.coord;
 			const { lon } = response.coord;
 			getCountryName(response);
-			cb(lat, lon, getData);
+			cb(lat, lon, func);
 		})
 		.catch((error) => console.log(error));
 }
@@ -34,7 +34,7 @@ function next7DaysForecast(lat, lon, callback) {
 }
 
 function getData(response) {
-	console.log(response.daily);
+	console.log(response);
 	displayWeatherReport(response);
 	display7DaysForecast(response);
 }
@@ -87,4 +87,4 @@ function getCountryName(response) {
 	else countryAndCityName = `${response.name}, ${countryName}.`;
 }
 
-export { getWeatherData, getLonAndLat };
+export { getWeatherData, getLonAndLat, getData };

@@ -1,4 +1,5 @@
 import { createDomElement } from "./create-dom-element";
+import { getLonAndLat, getWeatherData } from "./fetch-data";
 import AddIcon from "./icons/addcity.png";
 
 function watchlist() {
@@ -19,15 +20,25 @@ function watchlist() {
 	watchlistDiv.append(watchlistHeader, cityList);
 }
 
-function addCityToWatchlist() {
+function addCityToWatchlist(response) {
 	const addCityButton =
 			document.body.childNodes[2].childNodes[2].childNodes[1].lastChild,
 		cityList = document.body.childNodes[2].childNodes[2].childNodes[1],
 		watchlistInput = addCityButton.children[1],
-		city = createDomElement("li", { class: "city" });
+		iconAndCityName = createDomElement("div"),
+		city = createDomElement("li", { class: "city" }),
+		temp = createDomElement("p"),
+		descIcon = createDomElement("img");
 
-	city.textContent = watchlistInput.value;
+	iconAndCityName.append(descIcon, watchlistInput.value);
+	temp.append(` ${response.current.temp}`);
+	getIconAndTemp(city, iconAndCityName, descIcon, response, temp);
 	cityList.insertBefore(city, addCityButton);
+}
+
+function getIconAndTemp(city, iconAndCityName, descIcon, response, temp) {
+	city.append(iconAndCityName, temp);
+	descIcon.src = `https://openweathermap.org/img/w/${response.current.weather[0].icon}.png`;
 }
 
 function addListenerToButton() {
@@ -39,7 +50,9 @@ function addEventListenerToBtn(e) {
 			document.body.childNodes[2].childNodes[2].childNodes[1].lastChild,
 		watchlistInput = addCityButton.children[1];
 	if (e.target.className == "add-icon")
-		watchlistInput.value.trim() === "" ? false : addCityToWatchlist();
+		watchlistInput.value.trim() === ""
+			? false
+			: getWeatherData(addCityToWatchlist, getLonAndLat);
 }
 
 export { watchlist, addListenerToButton };

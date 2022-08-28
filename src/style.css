@@ -111,7 +111,17 @@ li {
 	outline: none;
 }
 .city {
-	padding-left: 38px;
+	padding: 7px 15px 7px 7px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.city > div:first-of-type {
+	display: flex;
+	align-items: center;
+}
+.city > div:first-of-type > img {
+	margin-right: 5px;
 }
 .temp-range {
 	display: flex;
