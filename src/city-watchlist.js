@@ -1,5 +1,5 @@
 import { createDomElement } from "./create-dom-element";
-import { getLonAndLat, getWeatherData } from "./fetch-data";
+import { getData, getLonAndLat, getWeatherData } from "./fetch-data";
 import AddIcon from "./icons/addcity.png";
 
 function watchlist() {
@@ -28,17 +28,23 @@ function addCityToWatchlist(response) {
 		iconAndCityName = createDomElement("div"),
 		city = createDomElement("li", { class: "city" }),
 		temp = createDomElement("p"),
+		cityName = createDomElement("p"),
 		descIcon = createDomElement("img");
 
-	iconAndCityName.append(descIcon, watchlistInput.value);
+	cityName.textContent = `${watchlistInput.value}`;
+	iconAndCityName.append(descIcon, cityName);
 	temp.append(` ${response.current.temp}`);
 	getIconAndTemp(city, iconAndCityName, descIcon, response, temp);
 	cityList.insertBefore(city, addCityButton);
 }
 
 function getIconAndTemp(city, iconAndCityName, descIcon, response, temp) {
+	const watchlistInput =
+		document.body.childNodes[2].childNodes[2].childNodes[1].lastChild
+			.childNodes[1];
 	city.append(iconAndCityName, temp);
 	descIcon.src = `https://openweathermap.org/img/w/${response.current.weather[0].icon}.png`;
+	watchlistInput.value = "";
 }
 
 function addListenerToButton() {
@@ -48,11 +54,22 @@ function addListenerToButton() {
 function addEventListenerToBtn(e) {
 	const addCityButton =
 			document.body.childNodes[2].childNodes[2].childNodes[1].lastChild,
-		watchlistInput = addCityButton.children[1];
+		headerInput = document.body.children[0].children[1].children[0],
+		headerButton = document.body.children[0].children[1].children[1],
+		watchlistInput = addCityButton.childNodes[1];
+
 	if (e.target.className == "add-icon")
 		watchlistInput.value.trim() === ""
 			? false
-			: getWeatherData(addCityToWatchlist, getLonAndLat);
+			: getWeatherData(addCityToWatchlist, getLonAndLat, watchlistInput.value);
+
+	if (e.target.className == "city") {
+		const cityName = e.target.childNodes[0].childNodes[1].textContent;
+		getWeatherData(getData, getLonAndLat, cityName, false);
+	}
+
+	if (e.target === headerButton)
+		getWeatherData(getData, getLonAndLat, headerInput.value, headerInput);
 }
 
 export { watchlist, addListenerToButton };

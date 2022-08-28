@@ -2,41 +2,52 @@ import { dataDisplay, minorDataReport, superScript } from "./page-main";
 import { createForecastCard } from "./seven-days-forecast";
 
 let countryAndCityName;
-const cityName = "Port Harcourt",
+const cityName = "London",
 	API = "20f7632ffc2c022654e4093c6947b4f4",
-	exclude = `${cityName}&units=metric&APPID=${API}`,
+	exclude = `&units=metric&APPID=${API}`,
 	exclude2 = `&exclude=minutely,hourly,alerts&units=metric&appid=${API}`;
 
-function getWeatherData(func, cb) {
-	fetch(`https://api.openweathermap.org/data/2.5/weather?q=${exclude}`, {
-		mode: "cors",
-	})
+function getWeatherData(func, cb, cityName, headerInput) {
+	fetch(
+		`https://api.openweathermap.org/data/2.5/weather?q=${cityName}${exclude}`,
+		{
+			mode: "cors",
+		}
+	)
 		.then((response) => response.json())
 		.then((response) => {
 			const { lat } = response.coord;
 			const { lon } = response.coord;
 			getCountryName(response);
-			cb(lat, lon, func);
+			cb(lat, lon, func, headerInput);
 		})
 		.catch((error) => console.log(error));
 }
 
-function getLonAndLat(lat, lon, callback) {
-	next7DaysForecast(lat, lon, callback);
+function getLonAndLat(lat, lon, callback, headerInput) {
+	next7DaysForecast(lat, lon, callback, headerInput);
 }
 
-function next7DaysForecast(lat, lon, callback) {
+function next7DaysForecast(lat, lon, callback, headerInput) {
 	fetch(
 		`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}${exclude2}`
 	)
 		.then((response) => response.json())
-		.then((response) => callback(response));
+		.then((response) => callback(response, headerInput));
 }
 
-function getData(response) {
-	console.log(response);
+function getData(response, headerInput) {
+	const todayDataDiv = document.body.childNodes[2].childNodes[0],
+		next7DaysDiv = document.body.childNodes[2].childNodes[1];
+	clearData(todayDataDiv);
+	clearData(next7DaysDiv);
 	displayWeatherReport(response);
 	display7DaysForecast(response);
+	if (headerInput.value) headerInput.value = "";
+}
+
+function clearData(div) {
+	while (div.firstChild) div.removeChild(div.firstChild);
 }
 
 function display7DaysForecast(response) {
@@ -87,4 +98,4 @@ function getCountryName(response) {
 	else countryAndCityName = `${response.name}, ${countryName}.`;
 }
 
-export { getWeatherData, getLonAndLat, getData };
+export { getWeatherData, getLonAndLat, getData, cityName };
