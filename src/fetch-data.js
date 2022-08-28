@@ -2,36 +2,41 @@ import { dataDisplay, minorDataReport, superScript } from "./page-main";
 import { createForecastCard } from "./seven-days-forecast";
 
 let countryAndCityName;
-const cityName = "Port Harcourt";
-const API = "20f7632ffc2c022654e4093c6947b4f4";
+const cityName = "Port Harcourt",
+	API = "20f7632ffc2c022654e4093c6947b4f4",
+	exclude = `${cityName}&units=metric&APPID=${API}`,
+	exclude2 = `&exclude=minutely,hourly,alerts&units=metric&appid=${API}`;
 
-function getWeatherData() {
-	fetch(
-		`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&APPID=${API}`,
-		{
-			mode: "cors",
-		}
-	)
+function getWeatherData(cb) {
+	fetch(`https://api.openweathermap.org/data/2.5/weather?q=${exclude}`, {
+		mode: "cors",
+	})
 		.then((response) => response.json())
 		.then((response) => {
 			const { lat } = response.coord;
 			const { lon } = response.coord;
 			getCountryName(response);
-			next7DaysForecast(lat, lon);
+			cb(lat, lon, getData);
 		})
 		.catch((error) => console.log(error));
 }
 
-function next7DaysForecast(lat, lon) {
+function getLonAndLat(lat, lon, callback) {
+	next7DaysForecast(lat, lon, callback);
+}
+
+function next7DaysForecast(lat, lon, callback) {
 	fetch(
-		`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${API}`
+		`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}${exclude2}`
 	)
 		.then((response) => response.json())
-		.then((response) => {
-			console.log(response.daily);
-			displayWeatherReport(response);
-			display7DaysForecast(response);
-		});
+		.then((response) => callback(response));
+}
+
+function getData(response) {
+	console.log(response.daily);
+	displayWeatherReport(response);
+	display7DaysForecast(response);
 }
 
 function display7DaysForecast(response) {
@@ -82,4 +87,4 @@ function getCountryName(response) {
 	else countryAndCityName = `${response.name}, ${countryName}.`;
 }
 
-export { getWeatherData };
+export { getWeatherData, getLonAndLat };
