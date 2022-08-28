@@ -1,6 +1,7 @@
 import { createDomElement } from "./create-dom-element";
 import { getData, getLonAndLat, getWeatherData } from "./fetch-data";
 import AddIcon from "./icons/addcity.png";
+import Delete from "./icons/delete.png";
 
 function watchlist() {
 	const watchlistDiv = document.body.childNodes[2].childNodes[2],
@@ -29,29 +30,51 @@ function addCityToWatchlist(response) {
 		city = createDomElement("li", { class: "city" }),
 		temp = createDomElement("p"),
 		cityName = createDomElement("p"),
-		descIcon = createDomElement("img");
+		descIcon = createDomElement("img"),
+		myDelete = createDomElement("img", { class: "delete", src: Delete });
 
 	cityName.textContent = `${watchlistInput.value}`;
 	iconAndCityName.append(descIcon, cityName);
 	temp.append(` ${response.current.temp}`);
-	getIconAndTemp(city, iconAndCityName, descIcon, response, temp);
+	
+	getIconAndTemp(city, iconAndCityName, descIcon, response, temp, myDelete);
 	cityList.insertBefore(city, addCityButton);
+	addEventListenerToCity(myDelete, city);
 }
 
-function getIconAndTemp(city, iconAndCityName, descIcon, response, temp) {
+function addEventListenerToCity(myDelete, city) {
+	myDelete.addEventListener("click", () =>
+		myDelete.parentNode.parentNode.removeChild(myDelete.parentNode)
+	);
+	city.addEventListener("mouseenter", () =>
+		myDelete.classList.add("show-delete")
+	);
+	city.addEventListener("mouseleave", () =>
+		myDelete.classList.remove("show-delete")
+	);
+}
+
+function getIconAndTemp(
+	city,
+	iconAndCityName,
+	descIcon,
+	response,
+	temp,
+	myDelete
+) {
 	const watchlistInput =
 		document.body.childNodes[2].childNodes[2].childNodes[1].lastChild
 			.childNodes[1];
-	city.append(iconAndCityName, temp);
+	city.append(iconAndCityName, temp, myDelete);
 	descIcon.src = `https://openweathermap.org/img/w/${response.current.weather[0].icon}.png`;
 	watchlistInput.value = "";
 }
 
 function addListenerToButton() {
-	document.addEventListener("click", addEventListenerToBtn);
+	document.addEventListener("click", addEventListeners);
 }
 
-function addEventListenerToBtn(e) {
+function addEventListeners(e) {
 	const addCityButton =
 			document.body.childNodes[2].childNodes[2].childNodes[1].lastChild,
 		headerInput = document.body.children[0].children[1].children[0],
