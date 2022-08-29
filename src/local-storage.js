@@ -1,4 +1,4 @@
-if (localStorage.getItem("cityName") == null)
+if (localStorage.getItem("cityName") === null)
 	localStorage.setItem("cityName", JSON.stringify("Port Harcourt"));
 
 let cityName = JSON.parse(localStorage.getItem("cityName"));

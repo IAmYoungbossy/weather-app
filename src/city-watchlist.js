@@ -40,18 +40,23 @@ function addCityToWatchlist(response) {
 		myDelete = createDomElement("img", { class: "delete", src: Delete });
 
 	cityName.textContent = `${watchlistInput.value}`;
-	iconAndCityName.append(descIcon, cityName);
+	if (this === document) iconAndCityName.append(descIcon, cityName);
+	else iconAndCityName.append(descIcon, this);
+	
 	temp.append(` ${response.current.temp}`);
-
 	getIconAndTemp(city, iconAndCityName, descIcon, response, temp, myDelete);
 	cityList.insertBefore(city, addCityButton);
 	addEventListenerToCity(myDelete, city);
 }
 
 function addEventListenerToCity(myDelete, city) {
-	myDelete.addEventListener("click", () =>
-		myDelete.parentNode.parentNode.removeChild(myDelete.parentNode)
-	);
+	myDelete.addEventListener("click", () => {
+		let listArray = Array.from(document.querySelectorAll(".city"));
+		let indexOfCity = listArray.indexOf(myDelete.parentNode);
+		watchlistArray.splice(indexOfCity, 1);
+		setwatchlistArray();
+		myDelete.parentNode.parentNode.removeChild(myDelete.parentNode);
+	});
 	city.addEventListener("mouseenter", () =>
 		myDelete.classList.add("show-delete")
 	);
@@ -92,11 +97,15 @@ function addEventListeners(e) {
 			? false
 			: watchlistArray.push(watchlistInput.value),
 			setwatchlistArray(),
-			getWeatherData(addCityToWatchlist, getLonAndLat, watchlistInput.value);
+			getWeatherData.apply(document, [
+				addCityToWatchlist.bind(document),
+				getLonAndLat,
+				watchlistInput.value,
+			]);
 
 	if (e.target.className == "city") {
-		const cityName = e.target.childNodes[0].childNodes[1].textContent;
-		getWeatherData(getData, getLonAndLat, cityName, false);
+		const city = e.target.childNodes[0].childNodes[1].textContent;
+		getWeatherData(getData, getLonAndLat, city, false);
 	}
 
 	if (e.target === headerButton) {
@@ -106,4 +115,16 @@ function addEventListeners(e) {
 	}
 }
 
-export { watchlist, addListenerToButton };
+function displayAvailableWatchlist() {
+	if (watchlistArray.length > 0)
+		watchlistArray.forEach((city) => {
+			getWeatherData(addCityToWatchlist.bind(city), getLonAndLat, city);
+		});
+}
+
+export {
+	watchlist,
+	addListenerToButton,
+	addCityToWatchlist,
+	displayAvailableWatchlist,
+};

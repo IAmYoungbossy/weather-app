@@ -1,8 +1,6 @@
-import { cityName } from "./local-storage";
 import { dataDisplay, minorDataReport, superScript } from "./page-main";
 import { createForecastCard } from "./seven-days-forecast";
 
-cityName;
 let countryAndCityName;
 const API = "20f7632ffc2c022654e4093c6947b4f4",
 	exclude = `&units=metric&APPID=${API}`,
@@ -99,4 +97,4 @@ function getCountryName(response) {
 	else countryAndCityName = `${response.name}, ${countryName}.`;
 }
 
-export { getWeatherData, getLonAndLat, getData, cityName };
+export { getWeatherData, getLonAndLat, getData };
