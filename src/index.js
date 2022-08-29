@@ -1,6 +1,11 @@
 import "./style.css";
 import { createHeader } from "./page-header";
-import { getData, getLonAndLat, getWeatherData } from "./fetch-data";
+import {
+	getCountryName,
+	getData,
+	getLonAndLat,
+	getWeatherData,
+} from "./fetch-data";
 import { createfooter } from "./page-footer";
 import { createMainContents } from "./page-main";
 import {
@@ -13,7 +18,14 @@ import { cityName } from "./local-storage";
 createHeader();
 createMainContents();
 createfooter();
-getWeatherData(getData, getLonAndLat, `${cityName}`, false);
-displayAvailableWatchlist();
 watchlist();
 addListenerToButton();
+displayAvailableWatchlist();
+getWeatherData.call(
+	document,
+	getData.bind(document),
+	getLonAndLat,
+	cityName,
+	false,
+	getCountryName
+);

@@ -2,13 +2,14 @@ import { dataDisplay, minorDataReport, superScript } from "./page-main";
 import { createForecastCard } from "./seven-days-forecast";
 
 let countryAndCityName;
+let countryAndCityName2;
 const API1 = "20f7632ffc2c022654e4093c6947b4f4",
 	API = "c93fd1817f3fbe42aeac0a63076603b9",
 	API2 = "0ad713fac120b83bd907261fb7742fd7",
 	exclude = `&units=metric&APPID=${API}`,
 	exclude2 = `&exclude=minutely,hourly,alerts&units=metric&appid=${API}`;
 
-function getWeatherData(func, cb, cityName, headerInput) {
+function getWeatherData(func, cb, cityName, headerInput, getName) {
 	fetch(
 		`https://api.openweathermap.org/data/2.5/weather?q=${cityName}${exclude}`,
 		{
@@ -19,7 +20,7 @@ function getWeatherData(func, cb, cityName, headerInput) {
 		.then((response) => {
 			const { lat } = response.coord;
 			const { lon } = response.coord;
-			getCountryName(response);
+			getName.call(this, response);
 			cb(lat, lon, func, headerInput);
 		})
 		.catch((error) => console.log(error));
@@ -42,7 +43,7 @@ function getData(response, headerInput) {
 		next7DaysDiv = document.body.childNodes[2].childNodes[1];
 	clearData(todayDataDiv);
 	clearData(next7DaysDiv);
-	displayWeatherReport(response);
+	displayWeatherReport.call(this, response);
 	display7DaysForecast(response);
 	if (headerInput.value) headerInput.value = "";
 }
@@ -69,7 +70,8 @@ function displayWeatherReport(response) {
 	const [wind, dewPoint, timeZone, uvIndex, pressure, humidity] =
 		minorDataReport();
 
-	nameOfCity.textContent = countryAndCityName;
+	if (this === document) nameOfCity.textContent = countryAndCityName;
+	else nameOfCity.textContent = countryAndCityName2;
 	weatherDesc.textContent = `${response.current.weather[0].description}`;
 	lowTemp.append("Low: ", parseInt(response.daily[0].temp.min), superScript());
 	highTemp.append(
@@ -93,10 +95,17 @@ function displayWeatherReport(response) {
 }
 
 function getCountryName(response) {
-	const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
-	const countryName = regionNames.of(response.sys.country);
-	if (countryName == response.name) countryAndCityName = countryName;
-	else countryAndCityName = `${response.name}, ${countryName}.`;
+	if (this === document) {
+		const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+		const countryName = regionNames.of(response.sys.country);
+		if (countryName == response.name) countryAndCityName = countryName;
+		else countryAndCityName = `${response.name}, ${countryName}.`;
+	} else {
+		const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+		const countryName = regionNames.of(response.sys.country);
+		if (countryName == response.name) countryAndCityName2 = countryName;
+		else countryAndCityName2 = `${response.name}, ${countryName}.`;
+	}
 }
 
-export { getWeatherData, getLonAndLat, getData };
+export { getWeatherData, getLonAndLat, getData, getCountryName };

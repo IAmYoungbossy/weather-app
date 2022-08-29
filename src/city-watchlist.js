@@ -1,5 +1,10 @@
 import { createDomElement } from "./create-dom-element";
-import { getData, getLonAndLat, getWeatherData } from "./fetch-data";
+import {
+	getCountryName,
+	getData,
+	getLonAndLat,
+	getWeatherData,
+} from "./fetch-data";
 import AddIcon from "./icons/addcity.png";
 import Delete from "./icons/delete.png";
 import {
@@ -112,42 +117,42 @@ function addEventListeners(e) {
 			e.target == cityList.children[0].children[0]
 		) {
 			const city = cityList.childNodes[0].childNodes[1].textContent;
-			getWeatherData(getData, getLonAndLat, city, false);
+			getWeatherData(getData, getLonAndLat, city, false, getCountryName);
 		}
 	});
 
 	if (e.target === headerButton) {
 		newName(headerInput.value);
 		setCityName();
-		getWeatherData(getData, getLonAndLat, headerInput.value, headerInput);
+		getWeatherData(
+			getData,
+			getLonAndLat,
+			headerInput.value,
+			headerInput,
+			getCountryName
+		);
 	}
 }
 
-// function displayAvailableWatchlist() {
-// 	if (watchlistArray.length > 0)
-// 		watchlistArray.forEach((city) => {
-// 			getWeatherData(addCityToWatchlist.bind(city), getLonAndLat, city);
-// 		});
-// }
-
-const fun = (prop) => {
+function delayExecution(city) {
+	const fetchNow = getWeatherData(
+		addCityToWatchlist.bind(city),
+		getLonAndLat,
+		city,
+		false,
+		getCountryName
+	);
 	return new Promise((resolve) => {
-		setTimeout(
-			() =>
-				resolve(
-					getWeatherData(addCityToWatchlist.bind(prop), getLonAndLat, prop)
-				),
-			1200
-		);
+		setTimeout(() => resolve(fetchNow), 1200);
 	});
-};
+}
 
-const displayAvailableWatchlist = async () => {
+async function displayAvailableWatchlist() {
 	if (watchlistArray.length > 0)
-		for (const prop of watchlistArray) {
-			await fun(prop);
+		for (const city of watchlistArray) {
+			await delayExecution(city);
 		}
-};
+}
 
 export {
 	watchlist,
