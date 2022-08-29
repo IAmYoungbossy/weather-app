@@ -2,7 +2,9 @@ import { dataDisplay, minorDataReport, superScript } from "./page-main";
 import { createForecastCard } from "./seven-days-forecast";
 
 let countryAndCityName;
-const API = "20f7632ffc2c022654e4093c6947b4f4",
+const API1 = "20f7632ffc2c022654e4093c6947b4f4",
+	API = "c93fd1817f3fbe42aeac0a63076603b9",
+	API2 = "0ad713fac120b83bd907261fb7742fd7",
 	exclude = `&units=metric&APPID=${API}`,
 	exclude2 = `&exclude=minutely,hourly,alerts&units=metric&appid=${API}`;
 

@@ -13,7 +13,7 @@ import { cityName } from "./local-storage";
 createHeader();
 createMainContents();
 createfooter();
-displayAvailableWatchlist();
 getWeatherData(getData, getLonAndLat, `${cityName}`, false);
+displayAvailableWatchlist();
 watchlist();
 addListenerToButton();

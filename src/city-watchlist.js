@@ -42,7 +42,7 @@ function addCityToWatchlist(response) {
 	cityName.textContent = `${watchlistInput.value}`;
 	if (this === document) iconAndCityName.append(descIcon, cityName);
 	else iconAndCityName.append(descIcon, this);
-	
+
 	temp.append(` ${response.current.temp}`);
 	getIconAndTemp(city, iconAndCityName, descIcon, response, temp, myDelete);
 	cityList.insertBefore(city, addCityButton);
@@ -103,10 +103,18 @@ function addEventListeners(e) {
 				watchlistInput.value,
 			]);
 
-	if (e.target.className == "city") {
-		const city = e.target.childNodes[0].childNodes[1].textContent;
-		getWeatherData(getData, getLonAndLat, city, false);
-	}
+	document.querySelectorAll(".city").forEach((cityList) => {
+		if (
+			e.target == cityList ||
+			e.target == cityList.children[0] ||
+			e.target == cityList.children[1] ||
+			e.target == cityList.children[0].children[1] ||
+			e.target == cityList.children[0].children[0]
+		) {
+			const city = cityList.childNodes[0].childNodes[1].textContent;
+			getWeatherData(getData, getLonAndLat, city, false);
+		}
+	});
 
 	if (e.target === headerButton) {
 		newName(headerInput.value);
@@ -115,12 +123,31 @@ function addEventListeners(e) {
 	}
 }
 
-function displayAvailableWatchlist() {
+// function displayAvailableWatchlist() {
+// 	if (watchlistArray.length > 0)
+// 		watchlistArray.forEach((city) => {
+// 			getWeatherData(addCityToWatchlist.bind(city), getLonAndLat, city);
+// 		});
+// }
+
+const fun = (prop) => {
+	return new Promise((resolve) => {
+		setTimeout(
+			() =>
+				resolve(
+					getWeatherData(addCityToWatchlist.bind(prop), getLonAndLat, prop)
+				),
+			1200
+		);
+	});
+};
+
+const displayAvailableWatchlist = async () => {
 	if (watchlistArray.length > 0)
-		watchlistArray.forEach((city) => {
-			getWeatherData(addCityToWatchlist.bind(city), getLonAndLat, city);
-		});
-}
+		for (const prop of watchlistArray) {
+			await fun(prop);
+		}
+};
 
 export {
 	watchlist,
