@@ -252,7 +252,7 @@ footer {
 }
 
 /* Uses flex-direction column for screen sizes below 600px */
-@media screen and (max-width: 700px) {
+@media screen and (max-device-width: 700px) {
 	main {
 		flex: 1;
 		display: flex;
