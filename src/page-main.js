@@ -30,32 +30,25 @@ function getWatchlist(mainDiv) {
 }
 
 function minorDataReport() {
-	const minorDataDiv = document.body.childNodes[2].childNodes[0].childNodes[3];
-	const windDiv = createDomElement("div", { class: "wind-div" });
-	const wind = createDomElement("p", { class: "wind" });
-	const dewPointDiv = createDomElement("div", { class: "dew-point-div" });
-	const dewPoint = createDomElement("p", { class: "dew-point" });
-	const timeZoneDiv = createDomElement("div", { class: "time-zone-div" });
-	const timeZone = createDomElement("p", { class: "time-zone" });
-	const uvIndexDiv = createDomElement("div", { class: "uv-index-div" });
-	const uvIndex = createDomElement("p", { class: "uv-index" });
-	const pressureDiv = createDomElement("div", { class: "pressure-div" });
-	const pressure = createDomElement("p", { class: "pressure" });
-	const humidityDiv = createDomElement("div", { class: "humidity-div" });
-	const humidity = createDomElement("p", { class: "humidity" });
-	const MyDate = new Image();
-	const MyHumidity = new Image();
-	const MyPressure = new Image();
-	const MyTimezone = new Image();
-	const MySeaLevel = new Image();
-	const MyWind = new Image();
-
-	MyDate.src = Date;
-	MyHumidity.src = Humidity;
-	MyPressure.src = Pressure;
-	MyTimezone.src = Timezone;
-	MySeaLevel.src = SeaLevel;
-	MyWind.src = Wind;
+	const minorDataDiv = document.body.childNodes[2].childNodes[0].childNodes[3],
+		windDiv = createDomElement("div", { class: "wind-div" }),
+		wind = createDomElement("p", { class: "wind" }),
+		dewPointDiv = createDomElement("div", { class: "dew-point-div" }),
+		dewPoint = createDomElement("p", { class: "dew-point" }),
+		timeZoneDiv = createDomElement("div", { class: "time-zone-div" }),
+		timeZone = createDomElement("p", { class: "time-zone" }),
+		uvIndexDiv = createDomElement("div", { class: "uv-index-div" }),
+		uvIndex = createDomElement("p", { class: "uv-index" }),
+		pressureDiv = createDomElement("div", { class: "pressure-div" }),
+		pressure = createDomElement("p", { class: "pressure" }),
+		humidityDiv = createDomElement("div", { class: "humidity-div" }),
+		humidity = createDomElement("p", { class: "humidity" }),
+		MyDate = createDomElement("img", { src: Date }),
+		MyHumidity = createDomElement("img", { src: Humidity }),
+		MyPressure = createDomElement("img", { src: Pressure }),
+		MyTimezone = createDomElement("img", { src: Timezone }),
+		MySeaLevel = createDomElement("img", { src: SeaLevel }),
+		MyWind = createDomElement("img", { src: Wind });
 
 	windDiv.append(MyWind, wind);
 	dewPointDiv.append(MySeaLevel, dewPoint);

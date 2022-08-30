@@ -67,7 +67,7 @@ main {
 .today-data-div {
 	display: flex;
 	flex-direction: column;
-	padding: 5px 5px 10px 20px;
+	padding: 5px 5px 0px 20px;
 	flex: 1;
 	background-color: #100f0f;
 	justify-content: space-evenly;
@@ -262,7 +262,7 @@ footer {
 		padding: 5px 20px 10px 20px;
 	}
 	.next-7days-div {
-		padding: 10px 20px 10px 20px;
+		padding: 0px 20px 10px 20px;
 	}
 	.watchlist-div {
 		padding: 15px 20px 10px 20px;

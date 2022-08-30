@@ -102,10 +102,12 @@ function addEventListeners(e) {
 			? false
 			: watchlistArray.push(watchlistInput.value),
 			setwatchlistArray(),
-			getWeatherData.apply(document, [
+			getWeatherData.apply(document.body, [
 				addCityToWatchlist.bind(document),
 				getLonAndLat,
 				watchlistInput.value,
+				false,
+				getCountryName
 			]);
 
 	document.querySelectorAll(".city").forEach((cityList) => {
