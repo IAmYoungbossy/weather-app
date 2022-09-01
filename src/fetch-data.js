@@ -111,15 +111,40 @@ function getCountryName(response) {
 }
 
 function screenLoader() {
-	const looaderContainer = createDomElement("div", {
-		class: "loader-container",
-	});
-	const loader = createDomElement("div", { class: "loader" });
-	looaderContainer.append(loader);
-	document.body.append(looaderContainer);
-}
-function clearScreenLoader() {
-	document.body.lastChild.parentNode.removeChild(document.body.lastChild);
+	if (this === document) {
+		const [loaderContainer] = createLoader(
+			"loader-watchlist",
+			"loader-container-watchlist"
+		);
+		document.body.childNodes[2].childNodes[2].append(loaderContainer);
+	} else {
+		const [loaderContainer] = createLoader("loader", "loader-container");
+		document.body.append(loaderContainer);
+	}
 }
 
-export { getWeatherData, getLonAndLat, getData, getCountryName, screenLoader, clearScreenLoader };
+function clearScreenLoader() {
+	if (this === document)
+		document.body.childNodes[2].childNodes[2].removeChild(
+			document.body.childNodes[2].childNodes[2].lastChild
+		);
+	else document.body.lastChild.parentNode.removeChild(document.body.lastChild);
+}
+
+function createLoader(loaderClass, loaderDivClass) {
+	const loaderContainer = createDomElement("div", {
+		class: loaderDivClass,
+	});
+	const loader = createDomElement("div", { class: loaderClass });
+	loaderContainer.append(loader);
+	return [loaderContainer];
+}
+
+export {
+	getWeatherData,
+	getLonAndLat,
+	getData,
+	getCountryName,
+	screenLoader,
+	clearScreenLoader,
+};

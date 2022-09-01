@@ -4,6 +4,7 @@
 	font-family: monospace;
 	box-sizing: border-box;
 }
+
 body {
 	height: 100vh;
 	display: flex;
@@ -24,7 +25,8 @@ header {
 	border-bottom: 1px solid #fc9898;
 	background-color: #000000;
 }
-.search-div > input {
+
+.search-div>input {
 	flex: 1;
 	padding: 5px;
 	border-right: none;
@@ -37,6 +39,7 @@ header {
 	border: none;
 	color: #edaeae;
 }
+
 button {
 	padding: 5px 20px;
 	height: min-content;
@@ -46,15 +49,18 @@ button {
 	outline: none;
 	border: none;
 }
+
 h1 {
 	font-size: 2rem;
 	font-family: monospace;
 }
+
 .search-div {
 	flex: 2;
 	display: flex;
 	max-width: 600px;
 }
+
 .title-div {
 	flex: 1;
 }
@@ -65,6 +71,7 @@ main {
 	display: grid;
 	/* grid-template-columns: 3fr 1fr; */
 }
+
 .today-data-div {
 	display: flex;
 	flex-direction: column;
@@ -73,14 +80,17 @@ main {
 	background-color: #100f0f;
 	justify-content: space-evenly;
 }
-.today-data-div > div:first-of-type,
-.today-data-div > h2:first-of-type,
-.temp-div > * {
+
+.today-data-div>div:first-of-type,
+.today-data-div>h2:first-of-type,
+.temp-div>* {
 	color: white;
 }
+
 .weather-desc {
 	color: white;
 }
+
 .next-7days-div {
 	flex: 2;
 	grid-area: 2/1/3/2;
@@ -91,20 +101,25 @@ main {
 	background-color: #100f0f;
 	gap: 10px;
 }
+
 .watchlist-div {
 	flex: 1;
 	padding: 15px 20px 5px 10px;
 	grid-area: 1/2/3/3;
 	background-color: #100f0f;
+	position: relative;
 }
-.watchlist-div > h2 {
+
+.watchlist-div>h2 {
 	text-align: center;
 	text-decoration: underline;
 	color: white;
 }
+
 ul {
 	margin-top: 10px;
 }
+
 li {
 	margin-top: 5px;
 	padding: 20px 10px;
@@ -112,6 +127,7 @@ li {
 	border-radius: 10px;
 	background-color: rgb(0 0 0);
 }
+
 .add-button {
 	display: flex;
 	align-items: center;
@@ -120,7 +136,8 @@ li {
 	padding-left: 20px;
 	border: 1px solid rgb(233 184 184 / 50%);
 }
-.add-button > input {
+
+.add-button>input {
 	border: none;
 	width: 100%;
 	min-width: 95px;
@@ -128,10 +145,12 @@ li {
 	margin-left: 15px;
 	background-color: initial;
 }
-.add-button > input:focus-visible {
+
+.add-button>input:focus-visible {
 	flex: 1;
 	outline: none;
 }
+
 .city {
 	padding: 7px 30px 7px 7px;
 	display: flex;
@@ -141,13 +160,16 @@ li {
 	color: #ffebce;
 	border: 1px solid rgb(233 184 184 / 50%);
 }
-.city > div:first-of-type {
+
+.city>div:first-of-type {
 	display: flex;
 	align-items: center;
 }
-.city > div:first-of-type > img {
+
+.city>div:first-of-type>img {
 	margin-right: 5px;
 }
+
 .delete {
 	width: 20px;
 	position: absolute;
@@ -155,31 +177,39 @@ li {
 	top: 5px;
 	visibility: hidden;
 }
+
 .show-delete {
 	visibility: visible;
 }
+
 .temp-range {
 	display: flex;
 	gap: 10px;
 }
+
 .temperature-div {
 	display: flex;
 }
+
 .temperature {
 	font-size: 4rem;
 }
-.temperature > .super-script {
+
+.temperature>.super-script {
 	font-size: 2rem;
 }
+
 .desc-icon {
 	width: 75px;
 }
+
 .minor-data-div {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	gap: 20px;
 }
-.minor-data-div > * {
+
+.minor-data-div>* {
 	display: flex;
 	align-items: center;
 	gap: 10px;
@@ -199,23 +229,29 @@ li {
 	0% {
 		border-color: #f56ce2;
 	}
+
 	25% {
 		border-color: #786cf5;
 	}
+
 	50% {
 		border-color: #acfcff;
 	}
+
 	70% {
 		border-color: #e4ffac;
 	}
+
 	100% {
 		border-color: #ffacac;
 	}
 }
-.minor-data-div > * > img {
+
+.minor-data-div>*>img {
 	width: 25px;
 	height: 25px;
 }
+
 .card {
 	display: flex;
 	flex-direction: column;
@@ -227,16 +263,19 @@ li {
 	flex: 1;
 	box-sizing: border-box;
 }
-.card > div > p:first-of-type {
+
+.card>div>p:first-of-type {
 	font-weight: bold;
 	text-decoration: underline;
 	font-size: 0.95rem;
 }
+
 .icon-div {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 }
+
 .feels-like-temp {
 	margin-top: -15px;
 	margin-bottom: 10px;
@@ -252,25 +291,8 @@ footer {
 	background-color: #000000;
 }
 
-/* Uses flex-direction column for screen sizes below 600px */
-@media screen and (max-width: 615px) {
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-	}
-	.today-data-div {
-		padding: 5px 20px 10px 20px;
-	}
-	.next-7days-div {
-		padding: 0px 20px 10px 20px;
-	}
-	.watchlist-div {
-		padding: 15px 20px 10px 20px;
-	}
-}
-
-.loader-container {
+.loader-container,
+.loader-container-watchlist {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -278,7 +300,15 @@ footer {
 	background-color: rgb(0, 0, 0, 0.5);
 }
 
-.loader {
+.loader-container-watchlist {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.loader,
+.loader-watchlist {
 	border: 10px solid #906262;
 	border-radius: 50%;
 	border-top: 10px solid #1d4d4f;
@@ -291,13 +321,63 @@ footer {
 	left: 45%;
 }
 
+.loader-watchlist {
+	border: 5px solid #906262;
+	border-top: 5px solid #1d4d4f;
+	width: 40px;
+	height: 40px;
+	top: 40%;
+	left: 40%;
+}
+
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* Uses flex-direction column for screen sizes below 600px */
+@media screen and (max-width: 615px) {
+	main {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.today-data-div {
+		padding: 5px 20px 10px 20px;
+	}
+
+	.next-7days-div {
+		padding: 0px 20px 10px 20px;
+	}
+
+	.watchlist-div {
+		padding: 15px 20px 10px 20px;
+	}
+
+	.loader-watchlist {
+		top: 50%;
+		left: 43%;
+	}
+	
+	.loader {
+		top: 50%;
+    left: 40%;
+	}
 }
