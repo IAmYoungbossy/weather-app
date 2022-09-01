@@ -1,6 +1,7 @@
 import { dataDisplay, minorDataReport, superScript } from "./page-main";
 import { createForecastCard } from "./seven-days-forecast";
 import { API_TOKEN } from "./config";
+import { createDomElement } from "./create-dom-element";
 
 let countryAndCityName;
 let countryAndCityName2;
@@ -33,7 +34,9 @@ function next7DaysForecast(lat, lon, callback, headerInput) {
 		`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}${exclude2}`
 	)
 		.then((response) => response.json())
-		.then((response) => callback(response, headerInput));
+		.then((response) => {
+			callback(response, headerInput);
+		});
 }
 
 function getData(response, headerInput) {
@@ -53,6 +56,7 @@ function clearData(div) {
 function display7DaysForecast(response) {
 	for (let i = 1; i < response.daily.length; i++)
 		createForecastCard(response.daily[i]);
+	clearScreenLoader();
 }
 
 function displayWeatherReport(response) {
@@ -106,4 +110,16 @@ function getCountryName(response) {
 	}
 }
 
-export { getWeatherData, getLonAndLat, getData, getCountryName };
+function screenLoader() {
+	const looaderContainer = createDomElement("div", {
+		class: "loader-container",
+	});
+	const loader = createDomElement("div", { class: "loader" });
+	looaderContainer.append(loader);
+	document.body.append(looaderContainer);
+}
+function clearScreenLoader() {
+	document.body.lastChild.parentNode.removeChild(document.body.lastChild);
+}
+
+export { getWeatherData, getLonAndLat, getData, getCountryName, screenLoader };

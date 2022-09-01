@@ -5,6 +5,7 @@ import {
 	getData,
 	getLonAndLat,
 	getWeatherData,
+	screenLoader,
 } from "./fetch-data";
 import { createfooter } from "./page-footer";
 import { createMainContents } from "./page-main";
@@ -19,6 +20,7 @@ createHeader();
 createMainContents();
 createfooter();
 watchlist();
+screenLoader();
 addListenerToButton();
 displayAvailableWatchlist();
 getWeatherData.call(
