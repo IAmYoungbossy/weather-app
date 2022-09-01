@@ -40,6 +40,8 @@ function next7DaysForecast(lat, lon, callback, headerInput) {
 }
 
 function getData(response, headerInput) {
+	let weatherDesc = response.current.weather[0].description;
+	console.log(weatherDesc);
 	const todayDataDiv = document.body.childNodes[2].childNodes[0],
 		next7DaysDiv = document.body.childNodes[2].childNodes[1];
 	clearData(todayDataDiv);
@@ -47,6 +49,7 @@ function getData(response, headerInput) {
 	displayWeatherReport.call(this, response);
 	display7DaysForecast(response);
 	if (headerInput.value) headerInput.value = "";
+	getWeatherImage(weatherDesc);
 }
 
 function clearData(div) {
@@ -138,6 +141,21 @@ function createLoader(loaderClass, loaderDivClass) {
 	const loader = createDomElement("div", { class: loaderClass });
 	loaderContainer.append(loader);
 	return [loaderContainer];
+}
+
+function getWeatherImage(weatherDesc) {
+	fetch(
+		`https://api.unsplash.com/search/photos?query=${weatherDesc}&per_page=1&client_id=gK52De2Tm_dL5o1IXKa9FROBAJ-LIYqR41xBdlg3X2k`,
+		{ mode: "cors" }
+	)
+		.then(function (response) {
+			return response.json();
+		})
+		.then(function (response) {
+			console.log(response.results[0].urls.raw);
+			// eslint-disable-next-line quotes
+			document.body.children[1].children[0].style.background = `url(${response.results[0].urls.raw})`;
+		});
 }
 
 export {
