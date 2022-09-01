@@ -81,7 +81,8 @@ main {
 	justify-content: space-evenly;
 	background-size: cover !important;
 	background-repeat: no-repeat !important;
-	background-position: center;
+	background-position: center !important;
+	box-shadow: inset 0px 0px 20px 20px black;
 }
 
 .today-data-div>div:first-of-type,
@@ -369,7 +370,7 @@ footer {
 	}
 
 	.next-7days-div {
-		padding: 0px 20px 10px 20px;
+		padding: 15px 20px 10px 20px;
 	}
 
 	.watchlist-div {

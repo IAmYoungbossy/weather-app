@@ -153,8 +153,7 @@ function getWeatherImage(weatherDesc) {
 		})
 		.then(function (response) {
 			console.log(response.results[0].urls.raw);
-			// eslint-disable-next-line quotes
-			document.body.children[1].children[0].style.background = `url(${response.results[0].urls.raw})`;
+			document.body.children[1].children[0].style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url(${response.results[0].urls.raw})`;
 		});
 }
 
