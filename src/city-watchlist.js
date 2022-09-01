@@ -1,9 +1,11 @@
 import { createDomElement } from "./create-dom-element";
 import {
+	clearScreenLoader,
 	getCountryName,
 	getData,
 	getLonAndLat,
 	getWeatherData,
+	screenLoader,
 } from "./fetch-data";
 import AddIcon from "./icons/addcity.png";
 import Delete from "./icons/delete.png";
@@ -52,6 +54,8 @@ function addCityToWatchlist(response) {
 	getIconAndTemp(city, iconAndCityName, descIcon, response, temp, myDelete);
 	cityList.insertBefore(city, addCityButton);
 	addEventListenerToCity(myDelete, city);
+	if (document.body.lastChild.className === "loader-container")
+		clearScreenLoader();
 }
 
 function addEventListenerToCity(myDelete, city) {
@@ -102,12 +106,13 @@ function addEventListeners(e) {
 			? false
 			: watchlistArray.push(watchlistInput.value),
 			setwatchlistArray(),
+			screenLoader(),
 			getWeatherData.apply(document.body, [
 				addCityToWatchlist.bind(document),
 				getLonAndLat,
 				watchlistInput.value,
 				false,
-				getCountryName
+				getCountryName,
 			]);
 
 	document.querySelectorAll(".city").forEach((cityList) => {
@@ -118,6 +123,7 @@ function addEventListeners(e) {
 			e.target == cityList.children[0].children[1] ||
 			e.target == cityList.children[0].children[0]
 		) {
+			screenLoader();
 			const city = cityList.childNodes[0].childNodes[1].textContent;
 			getWeatherData(getData, getLonAndLat, city, false, getCountryName);
 		}
@@ -126,6 +132,7 @@ function addEventListeners(e) {
 	if (e.target === headerButton) {
 		newName(headerInput.value);
 		setCityName();
+		screenLoader();
 		getWeatherData(
 			getData,
 			getLonAndLat,

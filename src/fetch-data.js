@@ -122,4 +122,4 @@ function clearScreenLoader() {
 	document.body.lastChild.parentNode.removeChild(document.body.lastChild);
 }
 
-export { getWeatherData, getLonAndLat, getData, getCountryName, screenLoader };
+export { getWeatherData, getLonAndLat, getData, getCountryName, screenLoader, clearScreenLoader };
