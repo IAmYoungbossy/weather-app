@@ -2,11 +2,12 @@ import { dataDisplay, minorDataReport, superScript } from "./page-main";
 import { createForecastCard } from "./seven-days-forecast";
 import { API_TOKEN } from "./config";
 import { createDomElement } from "./create-dom-element";
+import { newName, setCityName } from "./local-storage";
 
 let countryAndCityName;
 let countryAndCityName2;
-const exclude = `&units=metric&APPID=${API_TOKEN.KEY}`,
-	exclude2 = `&exclude=minutely,hourly,alerts&units=metric&appid=${API_TOKEN.KEY}`;
+const exclude = `&units=metric&APPID=${API_TOKEN.KEY2}`,
+	exclude2 = `&exclude=minutely,hourly,alerts&units=metric&appid=${API_TOKEN.KEY2}`;
 
 function getWeatherData(func, cb, cityName, headerInput, getName) {
 	fetch(
@@ -41,14 +42,14 @@ function next7DaysForecast(lat, lon, callback, headerInput) {
 
 function getData(response, headerInput) {
 	let weatherDesc = response.current.weather[0].description;
-	console.log(weatherDesc);
 	const todayDataDiv = document.body.childNodes[2].childNodes[0],
 		next7DaysDiv = document.body.childNodes[2].childNodes[1];
-	clearData(todayDataDiv);
-	clearData(next7DaysDiv);
-	displayWeatherReport.call(this, response);
-	display7DaysForecast(response);
-	if (headerInput.value) headerInput.value = "";
+	clearData(todayDataDiv),
+		clearData(next7DaysDiv),
+		displayWeatherReport.call(this, response),
+		display7DaysForecast(response);
+	if (headerInput.value)
+		newName(headerInput.value), setCityName(), (headerInput.value = "");
 	getWeatherImage(weatherDesc);
 }
 
@@ -152,7 +153,6 @@ function getWeatherImage(weatherDesc) {
 			return response.json();
 		})
 		.then(function (response) {
-			console.log(response.results[0].urls.raw);
 			document.body.children[1].children[0].style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url(${response.results[0].urls.raw})`;
 		});
 }

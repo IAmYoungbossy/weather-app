@@ -9,12 +9,7 @@ import {
 } from "./fetch-data";
 import AddIcon from "./icons/addcity.png";
 import Delete from "./icons/delete.png";
-import {
-	newName,
-	setCityName,
-	setwatchlistArray,
-	watchlistArray,
-} from "./local-storage";
+import { setwatchlistArray, watchlistArray } from "./local-storage";
 
 function watchlist() {
 	const watchlistDiv = document.body.childNodes[2].childNodes[2],
@@ -50,7 +45,7 @@ function addCityToWatchlist(response) {
 	if (this === document) iconAndCityName.append(descIcon, cityName);
 	else iconAndCityName.append(descIcon, this);
 
-	temp.append(` ${response.current.temp}`);
+	temp.append(`${response.current.temp}`);
 	getIconAndTemp(city, iconAndCityName, descIcon, response, temp, myDelete);
 	cityList.insertBefore(city, addCityButton);
 	addEventListenerToCity(myDelete, city);
@@ -90,7 +85,9 @@ function getIconAndTemp(
 			.childNodes[1];
 	city.append(iconAndCityName, temp, myDelete);
 	descIcon.src = `https://openweathermap.org/img/w/${response.current.weather[0].icon}.png`;
-	watchlistInput.value = "";
+	if (watchlistInput.value.trim() !== "")
+		watchlistArray.push(watchlistInput.value), setwatchlistArray();
+	if (watchlistInput.value) watchlistInput.value = "";
 }
 
 function addListenerToButton() {
@@ -104,12 +101,9 @@ function addEventListeners(e) {
 		headerButton = document.body.children[0].children[1].children[1],
 		watchlistInput = addCityButton.childNodes[1];
 
-	if (e.target.className == "add-icon")
-		watchlistInput.value.trim() === ""
-			? false
-			: watchlistArray.push(watchlistInput.value),
-			setwatchlistArray(),
-			screenLoader.call(document),
+	if (e.target.className == "add-icon") {
+		if (watchlistInput.value.trim() === "") return;
+		screenLoader.call(document),
 			getWeatherData.apply(document.body, [
 				addCityToWatchlist.bind(document),
 				getLonAndLat,
@@ -117,6 +111,7 @@ function addEventListeners(e) {
 				false,
 				getCountryName,
 			]);
+	}
 
 	document.querySelectorAll(".city").forEach((cityList) => {
 		if (
@@ -133,8 +128,7 @@ function addEventListeners(e) {
 	});
 
 	if (e.target === headerButton) {
-		newName(headerInput.value);
-		setCityName();
+		if (headerInput.value.trim() === "") return;
 		screenLoader();
 		getWeatherData(
 			getData,
