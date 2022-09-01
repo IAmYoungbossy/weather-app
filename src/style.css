@@ -196,19 +196,19 @@ li {
 /* A subtle blinking border color */
 @keyframes blinkingBorder {
 	0% {
-		border-color: #422b19;
+		border-color: #f56ce2;
 	}
 	25% {
-		border-color: #553533;
+		border-color: #786cf5;
 	}
 	50% {
-		border-color: #57032e;
+		border-color: #acfcff;
 	}
 	70% {
-		border-color: #6c3154;
+		border-color: #e4ffac;
 	}
 	100% {
-		border-color: #37253d;
+		border-color: #ffacac;
 	}
 }
 .minor-data-div > * > img {
