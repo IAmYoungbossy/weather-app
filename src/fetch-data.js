@@ -18,10 +18,19 @@ function getWeatherData(func, cb, cityName, headerInput, getName) {
 	)
 		.then((response) => response.json())
 		.then((response) => {
-			const { lat } = response.coord;
-			const { lon } = response.coord;
-			getName.call(this, response);
-			cb(lat, lon, func, headerInput);
+			if (response.cod == 404) {
+				console.log(this);
+				console.log(response);
+				clearScreenLoader();
+				document.body.childNodes[2].childNodes[2].removeChild(
+					document.body.childNodes[2].childNodes[2].lastChild);
+
+			} else if (response.cod == 200) {
+				const { lat } = response.coord;
+				const { lon } = response.coord;
+				getName.call(this, response);
+				cb(lat, lon, func, headerInput);
+			}
 		})
 		.catch((error) => console.log(error));
 }
