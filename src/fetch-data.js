@@ -22,9 +22,11 @@ function getWeatherData(func, cb, cityName, headerInput, getName) {
 				console.log(this);
 				console.log(response);
 				clearScreenLoader();
-				document.body.childNodes[2].childNodes[2].removeChild(
-					document.body.childNodes[2].childNodes[2].lastChild);
-
+				if (this === document.body) {
+					document.body.childNodes[2].childNodes[2].removeChild(
+						document.body.childNodes[2].childNodes[2].lastChild
+					);
+				}
 			} else if (response.cod == 200) {
 				const { lat } = response.coord;
 				const { lon } = response.coord;
