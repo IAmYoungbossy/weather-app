@@ -165,16 +165,20 @@ function displayCityNotFound() {
 			document.body.children[1].children[2].children[1].lastChild.children[1],
 		headerInput = document.body.children[0].children[1].children[0];
 	if (this === document.body)
-		setPlaceholder.call(this, watchlistInput, "Add City");
-	else setPlaceholder.call(this, headerInput, "Enter City Name");
+		watchlistInput.classList.add("not-found"),
+			setPlaceholder.call(this, watchlistInput, "Add City");
+	else
+		headerInput.classList.add("not-found"),
+			setPlaceholder.call(this, headerInput, "Enter City Name");
 }
 
 function setPlaceholder(input, placeholder) {
 	input.value = "";
 	input.setAttribute("placeholder", "City Not Found");
 	setTimeout(() => {
+		input.classList.remove("not-found");
 		input.setAttribute("placeholder", placeholder);
-	}, 2500);
+	}, 4000);
 }
 
 export {

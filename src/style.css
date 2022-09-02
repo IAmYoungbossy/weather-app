@@ -40,6 +40,10 @@ header {
 	color: #edaeae;
 }
 
+.not-found::placeholder{
+	color: red;
+}
+
 button {
 	padding: 5px 20px;
 	height: min-content;
