@@ -10,17 +10,21 @@ function createForecastCard(daily) {
 		day = createDomElement("p"),
 		weatherDesc = createDomElement("p"),
 		weatherDescIcon = createDomElement("img"),
+		lowTempSpan = createDomElement("span", { class: "convert" }),
 		lowTemp = createDomElement("p"),
+		highTempSpan = createDomElement("span", { class: "convert" }),
 		highTemp = createDomElement("p");
 
 	const date = new Date(daily.dt * 1000);
 	const weekday = date.toLocaleString("en-us", { weekday: "long" });
 
+	lowTempSpan.textContent = `${parseInt(daily.temp.min)}`;
+	highTempSpan.textContent = `${parseInt(daily.temp.max)}`;
 	day.textContent = `${weekday}`;
 	weatherDesc.textContent = `${daily.weather[0].description}`;
 	weatherDescIcon.src = `https://openweathermap.org/img/w/${daily.weather[0].icon}.png`;
-	highTemp.append(`${daily.temp.max}`, superScript());
-	lowTemp.append(`${daily.temp.min}`, superScript());
+	highTemp.append(highTempSpan, superScript());
+	lowTemp.append(lowTempSpan, superScript());
 	dayAndDesc.append(day, weatherDesc);
 	tempDiv.append(highTemp, lowTemp);
 	iconDiv.append(weatherDescIcon, tempDiv);

@@ -37,16 +37,18 @@ function addCityToWatchlist(response) {
 		watchlistInput = addCityButton.children[1],
 		iconAndCityName = createDomElement("div"),
 		city = createDomElement("li", { class: "city" }),
+		tempSpan = createDomElement("span", { class: "convert" }),
 		temp = createDomElement("p"),
 		cityName = createDomElement("p"),
 		descIcon = createDomElement("img"),
 		myDelete = createDomElement("img", { class: "delete", src: Delete });
 
+	tempSpan.textContent = `${parseInt(response.current.temp)}`;
 	cityName.textContent = `${watchlistInput.value}`;
 	if (this === document.body) iconAndCityName.append(descIcon, cityName);
 	else iconAndCityName.append(descIcon, this);
 
-	temp.append(`${response.current.temp}`, superScript());
+	temp.append(tempSpan, superScript());
 	getIconAndTemp(city, iconAndCityName, descIcon, response, temp, myDelete);
 	cityList.insertBefore(city, addCityButton);
 	addEventListenerToCity(myDelete, city);
@@ -131,7 +133,8 @@ function addEventListeners(e) {
 	if (e.target === headerButton) {
 		if (headerInput.value.trim() === "") return;
 		screenLoader();
-		getWeatherData.call(null,
+		getWeatherData.call(
+			null,
 			getData,
 			getLonAndLat,
 			headerInput.value,

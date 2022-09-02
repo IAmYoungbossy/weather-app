@@ -8,7 +8,7 @@ import {
 	screenLoader,
 } from "./fetch-data";
 import { createfooter } from "./page-footer";
-import { createMainContents } from "./page-main";
+import { convertBetweenUnits, createMainContents } from "./page-main";
 import {
 	addListenerToButton,
 	displayAvailableWatchlist,
@@ -18,6 +18,7 @@ import { cityName } from "./local-storage";
 
 createHeader();
 createMainContents();
+convertBetweenUnits();
 createfooter();
 watchlist();
 screenLoader();

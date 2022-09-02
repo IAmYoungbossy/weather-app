@@ -5,6 +5,7 @@ import Pressure from "./icons/pressure.png";
 import Timezone from "./icons/timezone.png";
 import Wind from "./icons/wind.png";
 import SeaLevel from "./icons/sealevel.png";
+import DegreeIcon from "./icons/degree.png";
 
 function createMainContents() {
 	const mainDiv = createDomElement("main", { class: "main" });
@@ -93,7 +94,6 @@ function dataDisplay() {
 	temperatureDiv.append(temperature, descIcon);
 	tempDiv.append(tempRange, temperatureDiv, feelsLikeTemp);
 	todayDataDiv.append(weatherDesc, nameOfCity, tempDiv, minorDataDiv);
-
 	return [
 		weatherDesc,
 		descIcon,
@@ -105,4 +105,51 @@ function dataDisplay() {
 	];
 }
 
-export { createMainContents, minorDataReport, superScript, dataDisplay };
+function convertBetweenUnits() {
+	const todayDataDiv = document.body.children[0],
+		unit = createDomElement("p", { class: "unit" }),
+		unitDiv = createDomElement("div", { class: "unit-div" }),
+		MyDegreeIcon = createDomElement("img", {
+			class: "degree",
+			src: DegreeIcon,
+		});
+	unit.textContent = " C";
+	unitDiv.append(MyDegreeIcon, unit);
+	todayDataDiv.append(unitDiv);
+
+	unit.addEventListener("click", () => {
+		if (unit.textContent == " C")
+			(unit.textContent = " F"), displayFahrenheit();
+		else (unit.textContent = " C"), displayCelsius();
+	});
+}
+
+function displayFahrenheit() {
+	document.querySelectorAll(".convert").forEach((temp) => {
+		temp.textContent = convertCelsiusToFahrenheit(parseFloat(temp.textContent));
+	});
+}
+
+function displayCelsius() {
+	document.querySelectorAll(".convert").forEach((temp) => {
+		temp.textContent = convertFahrenheitToCelsius(parseFloat(temp.textContent));
+	});
+}
+
+function convertCelsiusToFahrenheit(celsius) {
+	const fahrenheit = (celsius * 9) / 5 + 32;
+	return Math.round((fahrenheit * 1000) / 1000);
+}
+
+function convertFahrenheitToCelsius(fahrenheit) {
+	const celsius = ((fahrenheit - 32) * 5) / 9;
+	return Math.round((celsius * 1000) / 1000);
+}
+
+export {
+	createMainContents,
+	minorDataReport,
+	superScript,
+	dataDisplay,
+	convertBetweenUnits,
+};
