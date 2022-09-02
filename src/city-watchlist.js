@@ -42,7 +42,7 @@ function addCityToWatchlist(response) {
 		myDelete = createDomElement("img", { class: "delete", src: Delete });
 
 	cityName.textContent = `${watchlistInput.value}`;
-	if (this === document) iconAndCityName.append(descIcon, cityName);
+	if (this === document.body) iconAndCityName.append(descIcon, cityName);
 	else iconAndCityName.append(descIcon, this);
 
 	temp.append(`${response.current.temp}`);
@@ -53,7 +53,7 @@ function addCityToWatchlist(response) {
 		document.body.childNodes[2].childNodes[2].lastChild.className ===
 		"loader-container-watchlist"
 	)
-		clearScreenLoader.call(document);
+		clearScreenLoader.call(document.body);
 }
 
 function addEventListenerToCity(myDelete, city) {
@@ -105,7 +105,7 @@ function addEventListeners(e) {
 		if (watchlistInput.value.trim() === "") return;
 		screenLoader.call(document),
 			getWeatherData.apply(document.body, [
-				addCityToWatchlist.bind(document),
+				addCityToWatchlist.bind(document.body),
 				getLonAndLat,
 				watchlistInput.value,
 				false,
@@ -130,7 +130,7 @@ function addEventListeners(e) {
 	if (e.target === headerButton) {
 		if (headerInput.value.trim() === "") return;
 		screenLoader();
-		getWeatherData(
+		getWeatherData.call(null,
 			getData,
 			getLonAndLat,
 			headerInput.value,

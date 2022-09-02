@@ -4,8 +4,7 @@ import { API_TOKEN } from "./config";
 import { createDomElement } from "./create-dom-element";
 import { newName, setCityName } from "./local-storage";
 
-let countryAndCityName;
-let countryAndCityName2;
+let countryAndCityName, countryAndCityName2;
 const exclude = `&units=metric&APPID=${API_TOKEN.KEY2}`,
 	exclude2 = `&exclude=minutely,hourly,alerts&units=metric&appid=${API_TOKEN.KEY2}`;
 
@@ -19,14 +18,8 @@ function getWeatherData(func, cb, cityName, headerInput, getName) {
 		.then((response) => response.json())
 		.then((response) => {
 			if (response.cod == 404) {
-				console.log(this);
-				console.log(response);
-				clearScreenLoader();
-				if (this === document.body) {
-					document.body.childNodes[2].childNodes[2].removeChild(
-						document.body.childNodes[2].childNodes[2].lastChild
-					);
-				}
+				displayCityNotFound.call(this);
+				clearScreenLoader.call(this);
 			} else if (response.cod == 200) {
 				const { lat } = response.coord;
 				const { lon } = response.coord;
@@ -84,6 +77,7 @@ function displayWeatherReport(response) {
 		highTemp,
 		feelsLikeTemp,
 	] = dataDisplay();
+
 	const [wind, dewPoint, timeZone, uvIndex, pressure, humidity] =
 		minorDataReport();
 
@@ -112,14 +106,12 @@ function displayWeatherReport(response) {
 }
 
 function getCountryName(response) {
+	const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+	const countryName = regionNames.of(response.sys.country);
 	if (this === document) {
-		const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
-		const countryName = regionNames.of(response.sys.country);
 		if (countryName == response.name) countryAndCityName = countryName;
 		else countryAndCityName = `${response.name}, ${countryName}.`;
 	} else {
-		const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
-		const countryName = regionNames.of(response.sys.country);
 		if (countryName == response.name) countryAndCityName2 = countryName;
 		else countryAndCityName2 = `${response.name}, ${countryName}.`;
 	}
@@ -139,7 +131,7 @@ function screenLoader() {
 }
 
 function clearScreenLoader() {
-	if (this === document)
+	if (this === document.body)
 		document.body.childNodes[2].childNodes[2].removeChild(
 			document.body.childNodes[2].childNodes[2].lastChild
 		);
@@ -157,15 +149,32 @@ function createLoader(loaderClass, loaderDivClass) {
 
 function getWeatherImage(weatherDesc) {
 	fetch(
-		`https://api.unsplash.com/search/photos?query=${weatherDesc}&per_page=1&client_id=gK52De2Tm_dL5o1IXKa9FROBAJ-LIYqR41xBdlg3X2k`,
+		`https://api.unsplash.com/search/photos?query=${weatherDesc}&per_page=2&client_id=gK52De2Tm_dL5o1IXKa9FROBAJ-LIYqR41xBdlg3X2k`,
 		{ mode: "cors" }
 	)
 		.then(function (response) {
 			return response.json();
 		})
 		.then(function (response) {
-			document.body.children[1].children[0].style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url(${response.results[0].urls.raw})`;
+			document.body.children[1].children[0].style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url(${response.results[1].urls.raw})`;
 		});
+}
+
+function displayCityNotFound() {
+	const watchlistInput =
+			document.body.children[1].children[2].children[1].lastChild.children[1],
+		headerInput = document.body.children[0].children[1].children[0];
+	if (this === document.body)
+		setPlaceholder.call(this, watchlistInput, "Add City");
+	else setPlaceholder.call(this, headerInput, "Enter City Name");
+}
+
+function setPlaceholder(input, placeholder) {
+	input.value = "";
+	input.setAttribute("placeholder", "City Not Found");
+	setTimeout(() => {
+		input.setAttribute("placeholder", placeholder);
+	}, 2500);
 }
 
 export {
