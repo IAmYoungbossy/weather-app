@@ -10,6 +10,7 @@ import {
 import AddIcon from "./icons/addcity.png";
 import Delete from "./icons/delete.png";
 import { setwatchlistArray, watchlistArray } from "./local-storage";
+import { superScript } from "./page-main";
 
 function watchlist() {
 	const watchlistDiv = document.body.childNodes[2].childNodes[2],
@@ -45,7 +46,7 @@ function addCityToWatchlist(response) {
 	if (this === document.body) iconAndCityName.append(descIcon, cityName);
 	else iconAndCityName.append(descIcon, this);
 
-	temp.append(`${response.current.temp}`);
+	temp.append(`${response.current.temp}`, superScript());
 	getIconAndTemp(city, iconAndCityName, descIcon, response, temp, myDelete);
 	cityList.insertBefore(city, addCityButton);
 	addEventListenerToCity(myDelete, city);

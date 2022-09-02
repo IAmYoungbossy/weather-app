@@ -1,4 +1,5 @@
 import { createDomElement } from "./create-dom-element";
+import { superScript } from "./page-main";
 
 function createForecastCard(daily) {
 	const next7DaysDiv = document.body.childNodes[2].childNodes[1],
@@ -18,8 +19,8 @@ function createForecastCard(daily) {
 	day.textContent = `${weekday}`;
 	weatherDesc.textContent = `${daily.weather[0].description}`;
 	weatherDescIcon.src = `https://openweathermap.org/img/w/${daily.weather[0].icon}.png`;
-	highTemp.textContent = `${daily.temp.max}`;
-	lowTemp.textContent = `${daily.temp.min}`;
+	highTemp.append(`${daily.temp.max}`, superScript());
+	lowTemp.append(`${daily.temp.min}`, superScript());
 	dayAndDesc.append(day, weatherDesc);
 	tempDiv.append(highTemp, lowTemp);
 	iconDiv.append(weatherDescIcon, tempDiv);
