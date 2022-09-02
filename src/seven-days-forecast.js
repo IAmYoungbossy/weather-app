@@ -19,7 +19,7 @@ function createForecastCard(daily) {
 	weatherDesc.textContent = `${daily.weather[0].description}`;
 	weatherDescIcon.src = `https://openweathermap.org/img/w/${daily.weather[0].icon}.png`;
 	highTemp.textContent = `${daily.temp.max}`;
-	lowTemp.textContent = `${daily.temp.max}`;
+	lowTemp.textContent = `${daily.temp.min}`;
 	dayAndDesc.append(day, weatherDesc);
 	tempDiv.append(highTemp, lowTemp);
 	iconDiv.append(weatherDescIcon, tempDiv);
