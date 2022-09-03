@@ -8,20 +8,32 @@ function createfooter() {
 	const anchorLink = createDomElement("a", {
 		href: "https://github.com/IAmYoungbossy/weather-app",
 	});
-	const gitHubIcon = createDomElement("i", { fa: "fa-github" });
+	const gitHubIcon = createDomElement("i", { class: "fa fa-github" });
 	const iconsCredit = createDomElement("p");
-	const flatIconAnchor = createDomElement("a", {
+	const weatherAPI = createDomElement("a", {
 		target: "_blank",
-		href: "https://www.flaticon.com/",
+		href: "https://openweathermap.org/",
+	});
+	const imageAPI = createDomElement("a", {
+		target: "_blank",
+		href: "https://unsplash.com/",
 	});
 	const icons8Anchor = createDomElement("a", {
 		target: "_blank",
 		href: "https://icons8.com/",
 	});
 
-	flatIconAnchor.textContent = " Flaticon ";
-	icons8Anchor.textContent = " Icons8 ";
-	iconsCredit.append("Icons by", flatIconAnchor, " & ", icons8Anchor);
+	weatherAPI.textContent = " OpenWeatherMap ";
+	imageAPI.textContent = " Unsplash ";
+	icons8Anchor.textContent = " Icons8";
+	iconsCredit.append(
+		"Icons by",
+		icons8Anchor,
+		", Weather & Image API by",
+		weatherAPI,
+		" &",
+		imageAPI
+	);
 	anchorLink.appendChild(gitHubIcon);
 	footer.append(
 		"Copyright \u00A9 2022 IAmYoungbossy",
