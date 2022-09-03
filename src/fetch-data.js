@@ -23,8 +23,8 @@ function getWeatherData(func, cb, cityName, headerInput, getName) {
 		.then((response) => response.json())
 		.then((response) => {
 			if (response.cod == 404) {
-				displayCityNotFound.call(this);
-				clearScreenLoader.call(this);
+				displayCityNotFound.call(this, "City Not Found");
+				clearScreenLoader.call(this, "City Not Found");
 			} else if (response.cod == 200) {
 				const { lat } = response.coord;
 				const { lon } = response.coord;
@@ -168,21 +168,21 @@ function getWeatherImage(weatherDesc) {
 		});
 }
 
-function displayCityNotFound() {
+function displayCityNotFound(errorPlaceholder) {
 	const watchlistInput =
 			document.body.children[1].children[2].children[1].lastChild.children[1],
 		headerInput = document.body.children[0].children[1].children[0];
 	if (this === document.body)
 		watchlistInput.classList.add("not-found"),
-			setPlaceholder.call(this, watchlistInput, "Add City");
+			setPlaceholder.call(this, watchlistInput, "Add City", errorPlaceholder);
 	else
 		headerInput.classList.add("not-found"),
-			setPlaceholder.call(this, headerInput, "Enter City Name");
+			setPlaceholder.call(this, headerInput, "Enter City Name", errorPlaceholder);
 }
 
-function setPlaceholder(input, placeholder) {
+function setPlaceholder(input, placeholder, errorPlaceholder) {
 	input.value = "";
-	input.setAttribute("placeholder", "City Not Found");
+	input.setAttribute("placeholder", errorPlaceholder);
 	setTimeout(() => {
 		input.classList.remove("not-found");
 		input.setAttribute("placeholder", placeholder);
@@ -196,4 +196,5 @@ export {
 	getCountryName,
 	screenLoader,
 	clearScreenLoader,
+	displayCityNotFound,
 };

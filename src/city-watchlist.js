@@ -1,6 +1,7 @@
 import { createDomElement } from "./create-dom-element";
 import {
 	clearScreenLoader,
+	displayCityNotFound,
 	getCountryName,
 	getData,
 	getLonAndLat,
@@ -12,6 +13,7 @@ import Delete from "./icons/delete.png";
 import { setwatchlistArray, watchlistArray } from "./local-storage";
 import { superScript } from "./page-main";
 
+// Watchlist static elements
 function watchlist() {
 	const watchlistDiv = document.body.childNodes[2].childNodes[2],
 		watchlistHeader = createDomElement("h2"),
@@ -102,11 +104,20 @@ function addEventListeners(e) {
 			document.body.childNodes[2].childNodes[2].childNodes[1].lastChild,
 		headerInput = document.body.children[0].children[1].children[0],
 		headerButton = document.body.children[0].children[1].children[1],
-		watchlistInput = addCityButton.childNodes[1];
+		watchlistInput = addCityButton.childNodes[1],
+		numberOfCities =
+			document.body.children[1].children[2].children[1].childElementCount;
 
 	if (e.target.className == "add-icon") {
-		if (watchlistInput.value.trim() === "") return;
-		screenLoader.call(document),
+		if (watchlistInput.value.trim() === "") {
+			displayCityNotFound.call(document.body, "Empty Input");
+			return;
+		}
+		if (numberOfCities == 7) {
+			displayCityNotFound.call(document.body, "Max. Cities Reached");
+			return;
+		} else {
+			screenLoader.call(document);
 			getWeatherData.apply(document.body, [
 				addCityToWatchlist.bind(document.body),
 				getLonAndLat,
@@ -114,6 +125,7 @@ function addEventListeners(e) {
 				false,
 				getCountryName,
 			]);
+		}
 	}
 
 	document.querySelectorAll(".city").forEach((cityList) => {
@@ -131,7 +143,10 @@ function addEventListeners(e) {
 	});
 
 	if (e.target === headerButton) {
-		if (headerInput.value.trim() === "") return;
+		if (headerInput.value.trim() === "") {
+			displayCityNotFound.call(null, "Empty Input");
+			return;
+		}
 		screenLoader();
 		getWeatherData.call(
 			null,

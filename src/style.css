@@ -211,7 +211,16 @@ li {
 	transition: all .2s ease-in-out;
 }
 
-.city:hover {
+.add-icon {
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+
+.add-icon:hover {
+	transform: scale(1.2);
+}
+
+.city:hover, .add-icon {
 	background-color: #262829;
 	transform: scale(1.02);
 }
