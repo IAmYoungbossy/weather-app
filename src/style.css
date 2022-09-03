@@ -52,7 +52,9 @@ button {
 	padding: 5px 20px;
 	height: min-content;
 	border-radius: 10px;
-	background-color: dimgrey;
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
+	background-color: #3c3f4c;
 	color: snow;
 	outline: none;
 	border: none;
@@ -98,6 +100,7 @@ button:hover {
 h1 {
 	font-size: 2.5rem;
 	font-family: monospace;
+	color: antiquewhite;
 }
 
 .search-div {
@@ -155,7 +158,7 @@ main {
 	flex: 1;
 	padding: 15px 20px 5px 10px;
 	grid-area: 1/2/3/3;
-	background-color: #100f0f;
+	background-color: #262829;
 	position: relative;
 }
 
@@ -173,7 +176,7 @@ li {
 	margin-top: 5px;
 	padding: 20px 10px;
 	list-style: none;
-	background-color: #08040917;
+	background-color: #0b030ab0;
 }
 
 .add-button {
@@ -333,7 +336,7 @@ footer {
 	color: white;
 	margin-top: auto;
 	border-top: 1px solid #fc9898;
-	background-color: #000000d6;
+	background-color: #262829;
 }
 
 a {
@@ -433,5 +436,9 @@ a {
 	.loader {
 		top: 40%;
 		left: 40%;
+	}
+
+	footer {
+		background-color: #0b030ab0;
 	}
 }
