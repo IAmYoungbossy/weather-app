@@ -2,13 +2,18 @@ import { dataDisplay, minorDataReport, superScript } from "./page-main";
 import { createForecastCard } from "./seven-days-forecast";
 import { API_TOKEN } from "./config";
 import { createDomElement } from "./create-dom-element";
-import { newName, setCityName } from "./local-storage";
+import { degree, newName, setCityName } from "./local-storage";
 
-let countryAndCityName, countryAndCityName2;
-const exclude = `&units=metric&APPID=${API_TOKEN.KEY2}`,
-	exclude2 = `&exclude=minutely,hourly,alerts&units=metric&appid=${API_TOKEN.KEY2}`;
+let unit, countryAndCityName, countryAndCityName2;
+
+function checkPreferredUnit() {
+	if (degree == "C") unit = "metric";
+	else unit = "imperial";
+}
 
 function getWeatherData(func, cb, cityName, headerInput, getName) {
+	checkPreferredUnit();
+	const exclude = `&units=${unit}&APPID=${API_TOKEN.KEY}`;
 	fetch(
 		`https://api.openweathermap.org/data/2.5/weather?q=${cityName}${exclude}`,
 		{
@@ -35,6 +40,8 @@ function getLonAndLat(lat, lon, callback, headerInput) {
 }
 
 function next7DaysForecast(lat, lon, callback, headerInput) {
+	checkPreferredUnit();
+	const exclude2 = `&exclude=minutely,hourly,alerts&units=${unit}&appid=${API_TOKEN.KEY}`;
 	fetch(
 		`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}${exclude2}`
 	)

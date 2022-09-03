@@ -6,6 +6,7 @@ import Timezone from "./icons/timezone.png";
 import Wind from "./icons/wind.png";
 import SeaLevel from "./icons/sealevel.png";
 import DegreeIcon from "./icons/degree.png";
+import { degree, newDegree, setDegree } from "./local-storage";
 
 function createMainContents() {
 	const mainDiv = createDomElement("main", { class: "main" });
@@ -69,11 +70,22 @@ function minorDataReport() {
 }
 
 function superScript() {
-	const supScript = createDomElement("sup", { class: "super-script" });
-	const supScript2 = createDomElement("sup", { class: "super-script" });
+	const supScript = createDomElement("sup", { class: "super-script" }),
+		supScript2 = createDomElement("sup", { class: "super-script" }),
+		degreeSpan = createDomElement("span", { class: "super-span" });
+	degreeSpan.textContent = degree;
 	supScript.textContent = "o";
-	supScript2.append(supScript, "C");
+	supScript2.append(supScript, degreeSpan);
+	addListenerForEventTo(document.querySelector(".degree"), degreeSpan);
+	addListenerForEventTo(document.querySelector(".unit"), degreeSpan);
 	return supScript2;
+}
+
+function addListenerForEventTo(element, unit) {
+	element.addEventListener("click", () => {
+		if (degree == "C") unit.textContent = "C";
+		else unit.textContent = "F";
+	});
 }
 
 function dataDisplay() {
@@ -113,14 +125,23 @@ function convertBetweenUnits() {
 			class: "degree",
 			src: DegreeIcon,
 		});
-	unit.textContent = " C";
+
+	degree == "C" ? (unit.textContent = "F") : (unit.textContent = "C");
 	unitDiv.append(MyDegreeIcon, unit);
 	todayDataDiv.append(unitDiv);
+	listenToEventFrom(unit, unit);
+	listenToEventFrom(MyDegreeIcon, unit);
+}
 
-	unit.addEventListener("click", () => {
-		if (unit.textContent == " C")
-			(unit.textContent = " F"), displayFahrenheit();
-		else (unit.textContent = " C"), displayCelsius();
+function listenToEventFrom(element, unit) {
+	element.addEventListener("click", () => {
+		if (degree == "C")
+			newDegree("F"),
+				setDegree(),
+				(unit.textContent = " C"),
+				displayFahrenheit();
+		else
+			newDegree("C"), setDegree(), (unit.textContent = " F"), displayCelsius();
 	});
 }
 
