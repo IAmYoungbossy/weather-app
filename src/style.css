@@ -56,6 +56,16 @@ button {
 	color: snow;
 	outline: none;
 	border: none;
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+
+button:hover {
+	background-color: #532525;
+	transform: scale(1.01);
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
+	color: gray;
 }
 
 .unit-div {
@@ -63,9 +73,26 @@ button {
 	align-items: center;
 }
 
+.degree {
+	transition: all .2s ease-in-out;
+	cursor: pointer;
+}
+
 .unit {
 	font-weight: bold;
 	font-size: 1.5rem;
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+
+.unit:hover, .degree:hover {
+	color: #9e9e9e;
+  transform: scale(1.4);
+}
+
+.degree:hover {
+	color: #9e9e9e;
+  transform: scale(1.1);
 }
 
 h1 {
@@ -180,6 +207,13 @@ li {
 	position: relative;
 	color: #ffebce;
 	border: 1px solid #fc9898;
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+
+.city:hover {
+	background-color: #262829;
+	transform: scale(1.02);
 }
 
 .city>div:first-of-type {
@@ -259,6 +293,11 @@ li {
 	border: 1px solid #fc9898;
 	flex: 1;
 	box-sizing: border-box;
+	transition: all .2s ease-in-out;
+}
+
+.card:hover {
+	transform: scale(1.02);
 }
 
 .card>div>p:first-of-type {
