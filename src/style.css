@@ -71,7 +71,7 @@ button {
 	outline: none;
 	border: none;
 	cursor: pointer;
-	transition: all .2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
 
 button:hover {
@@ -92,7 +92,7 @@ button:hover {
 }
 
 .degree {
-	transition: all .2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 	cursor: pointer;
 }
 
@@ -100,7 +100,7 @@ button:hover {
 	font-weight: bold;
 	font-size: 1.5rem;
 	cursor: pointer;
-	transition: all .2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
 
 .unit:hover,
@@ -188,6 +188,7 @@ main {
 	min-width: fit-content;
 	background-color: rgb(0 0 0 / 80%);
 	border: 1px solid #fc9898;
+	transition: all 0.2s ease-in-out;
 }
 
 /* next 7 days styling */
@@ -212,7 +213,7 @@ main {
 	border: 1px solid #fc9898;
 	flex: 1;
 	box-sizing: border-box;
-	transition: all .2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
 
 /* watchlist div styling */
@@ -243,7 +244,7 @@ ul {
 	color: #ffebce;
 	border: 1px solid #fc9898;
 	cursor: pointer;
-	transition: all .2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
 
 li {
@@ -284,7 +285,7 @@ li {
 
 .add-icon {
 	cursor: pointer;
-	transition: all .2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
 
 .add-icon:hover {
@@ -333,6 +334,28 @@ li {
 	align-items: center;
 }
 
+.weather-desc,
+.name-of-city,
+.low-temp,
+.high-temp,
+.temperature,
+.desc-icon,
+.feels-like-temp {
+	transition: all 0.2s ease-in-out;
+}
+
+.weather-desc:hover,
+.name-of-city:hover,
+.low-temp:hover,
+.high-temp:hover,
+.temperature:hover,
+.desc-icon:hover,
+.feels-like-temp:hover,
+.minor-data-div>*:hover
+{
+	transform: scale(1.01);
+}
+
 /* Footer Styling */
 footer {
 	padding: 5px;
@@ -357,7 +380,6 @@ a {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	/* backdrop-filter: blur(1px); */
 	background-color: rgb(0, 0, 0, 0.5);
 }
 
