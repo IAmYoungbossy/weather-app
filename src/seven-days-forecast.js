@@ -1,4 +1,5 @@
 import { createDomElement } from "./create-dom-element";
+import { clearScreenLoader } from "./fetch-data";
 import { superScript } from "./page-main";
 
 function createForecastCard(daily) {
@@ -32,4 +33,10 @@ function createForecastCard(daily) {
 	next7DaysDiv.append(card);
 }
 
-export { createForecastCard };
+function display7DaysForecast(response) {
+	for (let i = 1; i < response.daily.length; i++)
+		createForecastCard(response.daily[i]);
+	clearScreenLoader();
+}
+
+export { createForecastCard, display7DaysForecast };

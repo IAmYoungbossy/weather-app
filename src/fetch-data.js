@@ -1,18 +1,17 @@
-import { dataDisplay, minorDataReport, superScript } from "./page-main";
-import { createForecastCard } from "./seven-days-forecast";
 import { API_TOKEN } from "./config";
 import { createDomElement } from "./create-dom-element";
-import { degree, newName, setCityName } from "./local-storage";
+import { degree } from "./local-storage";
 
 let unit, countryAndCityName, countryAndCityName2;
 
-function checkPreferredUnit() {
-	if (degree == "C") unit = "metric";
-	else unit = "imperial";
-}
-
-function getWeatherData(func, cb, cityName, headerInput, getName) {
-	checkPreferredUnit();
+function getWeatherData(
+	callback1,
+	callback2,
+	cityName,
+	headerInput,
+	callback3
+) {
+	checkPreferredUnit.bind(this);
 	const exclude = `&units=${unit}&APPID=${API_TOKEN.KEY}`;
 	fetch(
 		`https://api.openweathermap.org/data/2.5/weather?q=${cityName}${exclude}`,
@@ -23,16 +22,50 @@ function getWeatherData(func, cb, cityName, headerInput, getName) {
 		.then((response) => response.json())
 		.then((response) => {
 			if (response.cod == 404) {
-				displayCityNotFound.call(this, "City Not Found");
-				clearScreenLoader.call(this, "City Not Found");
+				displayErrorMessage.call(this, "City Not Found");
+				clearScreenLoader.call(this);
 			} else if (response.cod == 200) {
 				const { lat } = response.coord;
 				const { lon } = response.coord;
-				getName.call(this, response);
-				cb(lat, lon, func, headerInput);
+				callback3.call(this, response);
+				callback2(lat, lon, callback1, headerInput);
 			}
 		})
-		.catch((error) => console.log(error));
+		.catch(() => {
+			clearScreenLoader.call(this);
+			displayErrorMessage.call(this, "Slow Network Response, Reload Page.");
+		});
+}
+
+function checkPreferredUnit() {
+	if (degree == "C") unit = "metric";
+	else unit = "imperial";
+}
+
+function displayErrorMessage(errorPlaceholder) {
+	const watchlistInput =
+			document.body.children[1].children[2].children[1].lastChild.children[1],
+		headerInput = document.body.children[0].children[1].children[0];
+	if (this === document.body)
+		watchlistInput.classList.add("not-found"),
+			setPlaceholder.call(this, watchlistInput, "Add City", errorPlaceholder);
+	else
+		headerInput.classList.add("not-found"),
+			setPlaceholder.call(
+				this,
+				headerInput,
+				"Enter City Name",
+				errorPlaceholder
+			);
+}
+
+function setPlaceholder(input, placeholder, errorPlaceholder) {
+	input.value = "";
+	input.setAttribute("placeholder", errorPlaceholder);
+	setTimeout(() => {
+		input.classList.remove("not-found");
+		input.setAttribute("placeholder", placeholder);
+	}, 4000);
 }
 
 function getLonAndLat(lat, lon, callback, headerInput) {
@@ -46,71 +79,7 @@ function next7DaysForecast(lat, lon, callback, headerInput) {
 		`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}${exclude2}`
 	)
 		.then((response) => response.json())
-		.then((response) => {
-			callback(response, headerInput);
-		});
-}
-
-function getData(response, headerInput) {
-	let weatherDesc = response.current.weather[0].description;
-	const todayDataDiv = document.body.childNodes[2].childNodes[0],
-		next7DaysDiv = document.body.childNodes[2].childNodes[1];
-	clearData(todayDataDiv),
-		clearData(next7DaysDiv),
-		displayWeatherReport.call(this, response),
-		display7DaysForecast(response);
-	if (headerInput.value)
-		newName(headerInput.value), setCityName(), (headerInput.value = "");
-	getWeatherImage(weatherDesc);
-}
-
-function clearData(div) {
-	while (div.firstChild) div.removeChild(div.firstChild);
-}
-
-function display7DaysForecast(response) {
-	for (let i = 1; i < response.daily.length; i++)
-		createForecastCard(response.daily[i]);
-	clearScreenLoader();
-}
-
-function displayWeatherReport(response) {
-	const lowTempSpan = createDomElement("span", { class: "convert" }),
-		highTempSpan = createDomElement("span", { class: "convert" }),
-		feelsLikeSpan = createDomElement("span", { class: "convert" }),
-		temperatureSpan = createDomElement("span", { class: "convert" });
-	const [
-		weatherDesc,
-		descIcon,
-		nameOfCity,
-		temperature,
-		lowTemp,
-		highTemp,
-		feelsLikeTemp,
-	] = dataDisplay();
-
-	const [wind, dewPoint, timeZone, uvIndex, pressure, humidity] =
-		minorDataReport();
-
-	if (this === document) nameOfCity.textContent = countryAndCityName;
-	else nameOfCity.textContent = countryAndCityName2;
-	weatherDesc.textContent = `${response.current.weather[0].description}`;
-	lowTempSpan.textContent = `${parseInt(response.daily[0].temp.min)}`;
-	feelsLikeSpan.textContent = `${parseInt(response.current.feels_like)}`;
-	highTempSpan.textContent = `${parseInt(response.daily[0].temp.max)}`;
-	temperatureSpan.textContent = `${parseInt(response.current.temp)}`;
-
-	lowTemp.append("Low: ", lowTempSpan, superScript());
-	highTemp.append("High: ", highTempSpan, superScript());
-	temperature.append(temperatureSpan, superScript());
-	feelsLikeTemp.append("Feels Like ", feelsLikeSpan, superScript());
-	wind.append(`Wind Speed: ${response.current.wind_speed}`);
-	dewPoint.append(`Dew Point: ${response.current.dew_point}`);
-	timeZone.append(`time Zone: ${response.timezone}`);
-	uvIndex.append(`UV Index: ${response.current.uvi}`);
-	pressure.append(`Pressure: ${response.current.pressure}`);
-	humidity.append(`Humidity: ${response.current.humidity}`);
-	descIcon.src = `https://openweathermap.org/img/w/${response.current.weather[0].icon}.png`;
+		.then((response) => callback(response, headerInput));
 }
 
 function getCountryName(response) {
@@ -127,13 +96,13 @@ function getCountryName(response) {
 
 function screenLoader() {
 	if (this === document) {
-		const [loaderContainer] = createLoader(
+		const [loaderContainer] = createScreenLoader(
 			"loader-watchlist",
 			"loader-container-watchlist"
 		);
 		document.body.childNodes[2].childNodes[2].append(loaderContainer);
 	} else {
-		const [loaderContainer] = createLoader("loader", "loader-container");
+		const [loaderContainer] = createScreenLoader("loader", "loader-container");
 		document.body.append(loaderContainer);
 	}
 }
@@ -143,10 +112,11 @@ function clearScreenLoader() {
 		document.body.childNodes[2].childNodes[2].removeChild(
 			document.body.childNodes[2].childNodes[2].lastChild
 		);
-	else document.body.lastChild.parentNode.removeChild(document.body.lastChild);
+	else if (document.querySelector(".loader-container"))
+		document.body.lastChild.parentNode.removeChild(document.body.lastChild);
 }
 
-function createLoader(loaderClass, loaderDivClass) {
+function createScreenLoader(loaderClass, loaderDivClass) {
 	const loaderContainer = createDomElement("div", {
 		class: loaderDivClass,
 	});
@@ -157,44 +127,24 @@ function createLoader(loaderClass, loaderDivClass) {
 
 function getWeatherImage(weatherDesc) {
 	fetch(
-		`https://api.unsplash.com/search/photos?query=${weatherDesc}&per_page=2&client_id=gK52De2Tm_dL5o1IXKa9FROBAJ-LIYqR41xBdlg3X2k`,
+		`https://api.unsplash.com/search/photos?query=${weatherDesc}&per_page=2&client_id=${API_TOKEN.UNSPLASH_ACCESS_KEY2}`,
 		{ mode: "cors" }
 	)
-		.then(function (response) {
-			return response.json();
-		})
-		.then(function (response) {
-			document.body.children[1].children[0].style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url(${response.results[1].urls.raw})`;
-		});
-}
-
-function displayCityNotFound(errorPlaceholder) {
-	const watchlistInput =
-			document.body.children[1].children[2].children[1].lastChild.children[1],
-		headerInput = document.body.children[0].children[1].children[0];
-	if (this === document.body)
-		watchlistInput.classList.add("not-found"),
-			setPlaceholder.call(this, watchlistInput, "Add City", errorPlaceholder);
-	else
-		headerInput.classList.add("not-found"),
-			setPlaceholder.call(this, headerInput, "Enter City Name", errorPlaceholder);
-}
-
-function setPlaceholder(input, placeholder, errorPlaceholder) {
-	input.value = "";
-	input.setAttribute("placeholder", errorPlaceholder);
-	setTimeout(() => {
-		input.classList.remove("not-found");
-		input.setAttribute("placeholder", placeholder);
-	}, 4000);
+		.then((response) => response.json())
+		.then(
+			(response) =>
+				(document.body.children[1].children[0].style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url(${response.results[1].urls.raw})`)
+		);
 }
 
 export {
+	countryAndCityName,
+	countryAndCityName2,
 	getWeatherData,
 	getLonAndLat,
-	getData,
 	getCountryName,
 	screenLoader,
 	clearScreenLoader,
-	displayCityNotFound,
+	displayErrorMessage,
+	getWeatherImage,
 };

@@ -6,7 +6,8 @@ import Timezone from "./icons/timezone.png";
 import Wind from "./icons/wind.png";
 import SeaLevel from "./icons/sealevel.png";
 import DegreeIcon from "./icons/degree.png";
-import { degree, newDegree, setDegree } from "./local-storage";
+import { degree } from "./local-storage";
+import { addListenerForEventTo, listenToEventFrom } from "./app-click-events";
 
 function createMainContents() {
 	const mainDiv = createDomElement("main", { class: "main" });
@@ -81,13 +82,6 @@ function superScript() {
 	return supScript2;
 }
 
-function addListenerForEventTo(element, unit) {
-	element.addEventListener("click", () => {
-		if (degree == "C") unit.textContent = "C";
-		else unit.textContent = "F";
-	});
-}
-
 function dataDisplay() {
 	const todayDataDiv = document.body.childNodes[2].childNodes[0];
 	const weatherDesc = createDomElement("p", { class: "weather-desc" }),
@@ -129,42 +123,7 @@ function convertBetweenUnits() {
 	degree == "C" ? (unit.textContent = "F") : (unit.textContent = "C");
 	unitDiv.append(MyDegreeIcon, unit);
 	todayDataDiv.append(unitDiv);
-	listenToEventFrom(unit, unit);
-	listenToEventFrom(MyDegreeIcon, unit);
-}
-
-function listenToEventFrom(element, unit) {
-	element.addEventListener("click", () => {
-		if (degree == "C")
-			newDegree("F"),
-				setDegree(),
-				(unit.textContent = " C"),
-				displayFahrenheit();
-		else
-			newDegree("C"), setDegree(), (unit.textContent = " F"), displayCelsius();
-	});
-}
-
-function displayFahrenheit() {
-	document.querySelectorAll(".convert").forEach((temp) => {
-		temp.textContent = convertCelsiusToFahrenheit(parseFloat(temp.textContent));
-	});
-}
-
-function displayCelsius() {
-	document.querySelectorAll(".convert").forEach((temp) => {
-		temp.textContent = convertFahrenheitToCelsius(parseFloat(temp.textContent));
-	});
-}
-
-function convertCelsiusToFahrenheit(celsius) {
-	const fahrenheit = (celsius * 9) / 5 + 32;
-	return Math.round((fahrenheit * 1000) / 1000);
-}
-
-function convertFahrenheitToCelsius(fahrenheit) {
-	const celsius = ((fahrenheit - 32) * 5) / 9;
-	return Math.round((celsius * 1000) / 1000);
+	listenToEventFrom(unit, unit), listenToEventFrom(MyDegreeIcon, unit);
 }
 
 export {

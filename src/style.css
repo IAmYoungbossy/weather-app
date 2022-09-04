@@ -30,6 +30,22 @@ header {
 	background-color: #000000d6;
 }
 
+h1 {
+	font-size: 2.5rem;
+	font-family: monospace;
+	color: antiquewhite;
+}
+
+.title-div {
+	flex: 1;
+}
+
+.search-div {
+	flex: 2;
+	display: flex;
+	max-width: 600px;
+}
+
 .search-div>input {
 	flex: 1;
 	padding: 5px;
@@ -42,10 +58,6 @@ header {
 	outline: none;
 	border: none;
 	color: #edaeae;
-}
-
-.not-found::placeholder {
-	color: red;
 }
 
 button {
@@ -70,6 +82,10 @@ button:hover {
 	color: gray;
 }
 
+.not-found::placeholder {
+	color: red;
+}
+
 .unit-div {
 	display: flex;
 	align-items: center;
@@ -87,39 +103,24 @@ button:hover {
 	transition: all .2s ease-in-out;
 }
 
-.unit:hover, .degree:hover {
+.unit:hover,
+.degree:hover {
 	color: #9e9e9e;
-  transform: scale(1.4);
+	transform: scale(1.4);
 }
 
 .degree:hover {
 	color: #9e9e9e;
-  transform: scale(1.1);
-}
-
-h1 {
-	font-size: 2.5rem;
-	font-family: monospace;
-	color: antiquewhite;
-}
-
-.search-div {
-	flex: 2;
-	display: flex;
-	max-width: 600px;
-}
-
-.title-div {
-	flex: 1;
+	transform: scale(1.1);
 }
 
 /* Main Styling */
 main {
 	flex: 1;
 	display: grid;
-	/* grid-template-columns: 3fr 1fr; */
 }
 
+/* today data div styling */
 .today-data-div {
 	display: flex;
 	flex-direction: column;
@@ -133,120 +134,14 @@ main {
 	box-shadow: inset 0px 0px 20px 20px black;
 }
 
-.today-data-div>div:first-of-type,
-.today-data-div>h2:first-of-type,
-.temp-div>* {
-	color: white;
-}
-
 .weather-desc {
 	color: white;
 }
 
-.next-7days-div {
-	flex: 2;
-	grid-area: 2/1/3/2;
-	display: flex;
-	padding: 10px 5px 10px 20px;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	background-color: #010000;
-	gap: 10px;
-}
-
-.watchlist-div {
-	flex: 1;
-	padding: 15px 20px 5px 10px;
-	grid-area: 1/2/3/3;
-	background-color: #262829;
-	position: relative;
-}
-
-.watchlist-div>h2 {
-	text-align: center;
-	text-decoration: underline;
+.today-data-div>div:first-of-type,
+.today-data-div>h2:first-of-type,
+.temp-div>* {
 	color: white;
-}
-
-ul {
-	margin-top: 10px;
-}
-
-li {
-	margin-top: 5px;
-	padding: 20px 10px;
-	list-style: none;
-	background-color: #0b030ab0;
-}
-
-.add-button {
-	display: flex;
-	align-items: center;
-	padding-right: 30px;
-	gap: 5px;
-	padding-left: 20px;
-	border: 1px solid rgb(233 184 184 / 50%);
-}
-
-.add-button>input {
-	border: none;
-	width: 100%;
-	min-width: 95px;
-	color: white;
-	margin-left: 15px;
-	background-color: initial;
-}
-
-.add-button>input:focus-visible {
-	flex: 1;
-	outline: none;
-}
-
-.city {
-	padding: 7px 30px 7px 7px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	position: relative;
-	color: #ffebce;
-	border: 1px solid #fc9898;
-	cursor: pointer;
-	transition: all .2s ease-in-out;
-}
-
-.add-icon {
-	cursor: pointer;
-	transition: all .2s ease-in-out;
-}
-
-.add-icon:hover {
-	transform: scale(1.2);
-}
-
-.city:hover, .add-icon {
-	background-color: #262829;
-	transform: scale(1.02);
-}
-
-.city>div:first-of-type {
-	display: flex;
-	align-items: center;
-}
-
-.city>div:first-of-type>img {
-	margin-right: 5px;
-}
-
-.delete {
-	width: 20px;
-	position: absolute;
-	right: 10px;
-	top: 5px;
-	visibility: hidden;
-}
-
-.show-delete {
-	visibility: visible;
 }
 
 .temp-range {
@@ -270,6 +165,11 @@ li {
 	width: 75px;
 }
 
+.feels-like-temp {
+	margin-top: -15px;
+	margin-bottom: 10px;
+}
+
 .minor-data-div {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -290,9 +190,16 @@ li {
 	border: 1px solid #fc9898;
 }
 
-.minor-data-div>*>img {
-	width: 25px;
-	height: 25px;
+/* next 7 days styling */
+.next-7days-div {
+	flex: 2;
+	grid-area: 2/1/3/2;
+	display: flex;
+	padding: 10px 5px 10px 20px;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	background-color: #010000;
+	gap: 10px;
 }
 
 .card {
@@ -306,6 +213,108 @@ li {
 	flex: 1;
 	box-sizing: border-box;
 	transition: all .2s ease-in-out;
+}
+
+/* watchlist div styling */
+.watchlist-div {
+	flex: 1;
+	padding: 15px 20px 5px 10px;
+	grid-area: 1/2/3/3;
+	background-color: #262829;
+	position: relative;
+}
+
+.watchlist-div>h2 {
+	text-align: center;
+	text-decoration: underline;
+	color: white;
+}
+
+ul {
+	margin-top: 10px;
+}
+
+.city {
+	padding: 7px 30px 7px 7px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+	color: #ffebce;
+	border: 1px solid #fc9898;
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+
+li {
+	margin-top: 5px;
+	padding: 20px 10px;
+	list-style: none;
+	background-color: #0b030ab0;
+}
+
+.add-button {
+	display: flex;
+	align-items: center;
+	padding-right: 30px;
+	gap: 5px;
+	padding-left: 20px;
+	border: 1px solid rgb(233 184 184 / 50%);
+}
+
+.city:hover,
+.add-icon {
+	background-color: #262829;
+	transform: scale(1.02);
+}
+
+.add-button>input {
+	border: none;
+	width: 100%;
+	min-width: 95px;
+	color: white;
+	margin-left: 15px;
+	background-color: initial;
+}
+
+.add-button>input:focus-visible {
+	flex: 1;
+	outline: none;
+}
+
+.add-icon {
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+
+.add-icon:hover {
+	transform: scale(1.2);
+}
+
+.city>div:first-of-type {
+	display: flex;
+	align-items: center;
+}
+
+.city>div:first-of-type>img {
+	margin-right: 5px;
+}
+
+.delete {
+	width: 20px;
+	position: absolute;
+	right: 10px;
+	top: 5px;
+	visibility: hidden;
+}
+
+.show-delete {
+	visibility: visible;
+}
+
+.minor-data-div>*>img {
+	width: 25px;
+	height: 25px;
 }
 
 .card:hover {
@@ -322,11 +331,6 @@ li {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-}
-
-.feels-like-temp {
-	margin-top: -15px;
-	margin-bottom: 10px;
 }
 
 /* Footer Styling */
