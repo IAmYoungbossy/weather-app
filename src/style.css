@@ -319,7 +319,7 @@ li {
 }
 
 .card:hover {
-	transform: scale(1.02);
+	transform: scale(1.01);
 }
 
 .card>div>p:first-of-type {

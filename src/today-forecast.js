@@ -58,12 +58,12 @@ function displayTodayFoecast(response) {
 	highTemp.append("High: ", highTempSpan, superScript());
 	temperature.append(temperatureSpan, superScript());
 	feelsLikeTemp.append("Feels Like ", feelsLikeSpan, superScript());
-	wind.append(`Wind Speed: ${response.current.wind_speed}`);
+	wind.append(`Wind Speed: ${response.current.wind_speed}m/s`);
 	dewPoint.append(`Dew Point: ${response.current.dew_point}`);
 	timeZone.append(`time Zone: ${response.timezone}`);
 	uvIndex.append(`UV Index: ${response.current.uvi}`);
-	pressure.append(`Pressure: ${response.current.pressure}`);
-	humidity.append(`Humidity: ${response.current.humidity}`);
+	pressure.append(`Pressure: ${response.current.pressure}hPa`);
+	humidity.append(`Humidity: ${response.current.humidity}%`);
 	descIcon.src = `https://openweathermap.org/img/w/${response.current.weather[0].icon}.png`;
 }
 
